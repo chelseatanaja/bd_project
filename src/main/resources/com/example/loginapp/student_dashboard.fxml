@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.loginapp.controller.StudentDashboardController"
+            prefWidth="1280" prefHeight="760"
+            style="-fx-background-color: linear-gradient(to bottom right, #EEF2FF, #F8FAFC);">
+
+    <left>
+        <VBox prefWidth="250" spacing="18"
+              style="-fx-background-color: linear-gradient(to bottom, #0F172A, #1E1B4B);">
+            <padding><Insets top="30" right="20" bottom="30" left="20"/></padding>
+
+            <Label text="Student LMS" textFill="WHITE">
+                <font><Font name="System Bold" size="26"/></font>
+            </Label>
+            <Label text="Mahasiswa Dashboard" textFill="#A5B4FC"/>
+
+            <Separator opacity="0.18"/>
+
+            <Button text="Dashboard" maxWidth="Infinity"
+                    style="-fx-background-color:#6366F1; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:14; -fx-padding:13;"/>
+
+            <Button text="Assignments" maxWidth="Infinity"
+                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+
+            <Button text="Materials" maxWidth="Infinity"
+                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+
+            <Button text="Submissions" maxWidth="Infinity"
+                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Button fx:id="btnLogout" text="Logout" maxWidth="Infinity"
+                    style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:14; -fx-padding:13;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="24">
+            <padding><Insets top="30" right="34" bottom="30" left="34"/></padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <VBox spacing="4">
+                    <Label fx:id="lblWelcome" text="Hi Student, welcome back!" textFill="#0F172A">
+                        <font><Font name="System Bold" size="32"/></font>
+                    </Label>
+                    <Label text="View assignments, learning materials, and upload your submissions."
+                           textFill="#64748B"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <TextField fx:id="txtSearch"
+                           promptText="Search assignment or material..."
+                           prefWidth="300"
+                           prefHeight="42"
+                           style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#E2E8F0; -fx-border-radius:14; -fx-padding:0 14;"/>
+            </HBox>
+
+            <HBox spacing="18">
+                <VBox spacing="10" prefWidth="240"
+                      style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="Active Assignments" textFill="#64748B"/>
+                    <Label fx:id="lblActiveAssignment" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Need to submit" textFill="#F97316"/>
+                </VBox>
+
+                <VBox spacing="10" prefWidth="240"
+                      style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="Submitted" textFill="#64748B"/>
+                    <Label fx:id="lblSubmitted" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Assignments uploaded" textFill="#22C55E"/>
+                </VBox>
+
+                <VBox spacing="10" prefWidth="240"
+                      style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="Materials" textFill="#64748B"/>
+                    <Label fx:id="lblMaterials" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Available files" textFill="#6366F1"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24" VBox.vgrow="ALWAYS">
+
+                <VBox spacing="16" HBox.hgrow="ALWAYS"
+                      style="-fx-background-color:white; -fx-background-radius:24; -fx-padding:24;">
+                    <Label text="My Assignments" textFill="#0F172A">
+                        <font><Font name="System Bold" size="22"/></font>
+                    </Label>
+
+                    <TableView fx:id="tblAssignments" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colAssignmentName" text="Assignment" prefWidth="200"/>
+                            <TableColumn fx:id="colClassName" text="Class" prefWidth="160"/>
+                            <TableColumn fx:id="colDeadline" text="Deadline" prefWidth="150"/>
+                            <TableColumn fx:id="colStatus" text="Status" prefWidth="110"/>
+                            <TableColumn fx:id="colFile" text="File" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox spacing="16" prefWidth="380"
+                      style="-fx-background-color:white; -fx-background-radius:24; -fx-padding:24;">
+                    <Label text="Upload Submission" textFill="#0F172A">
+                        <font><Font name="System Bold" size="22"/></font>
+                    </Label>
+
+                    <ComboBox fx:id="cmbAssignment"
+                              promptText="Select Assignment"
+                              prefWidth="330"
+                              prefHeight="42"/>
+
+                    <TextField fx:id="txtSubmissionFile"
+                               promptText="Selected file..."
+                               prefHeight="42"/>
+
+                    <Button fx:id="btnChooseFile"
+                            text="Choose File"
+                            prefWidth="330"
+                            prefHeight="42"
+                            style="-fx-background-color:#E0E7FF; -fx-text-fill:#3730A3; -fx-font-weight:bold; -fx-background-radius:12;"/>
+
+                    <Button fx:id="btnUploadSubmission"
+                            text="Upload Submission"
+                            prefWidth="330"
+                            prefHeight="45"
+                            style="-fx-background-color:#6366F1; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:12;"/>
+
+                    <Separator/>
+
+                    <Label text="Learning Materials" textFill="#0F172A">
+                        <font><Font name="System Bold" size="20"/></font>
+                    </Label>
+
+                    <TableView fx:id="tblMaterials" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colMaterialName" text="Material" prefWidth="170"/>
+                            <TableColumn fx:id="colMaterialClass" text="Class" prefWidth="100"/>
+                            <TableColumn fx:id="colMaterialFile" text="File" prefWidth="90"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

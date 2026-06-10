@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.loginapp.controller.AdminDashboardController"
+            prefWidth="1280" prefHeight="760"
+            style="-fx-background-color: linear-gradient(to bottom right, #EEF2FF, #F8FAFC);">
+
+    <left>
+        <VBox prefWidth="250" spacing="18" style="-fx-background-color: linear-gradient(to bottom, #0F172A, #1E1B4B);">
+            <padding><Insets top="30" right="20" bottom="30" left="20"/></padding>
+
+            <Label text="Admin LMS" textFill="WHITE">
+                <font><Font name="System Bold" size="26"/></font>
+            </Label>
+            <Label text="Administrator Dashboard" textFill="#A5B4FC"/>
+
+            <Separator opacity="0.18"/>
+
+            <Button text="Dashboard" maxWidth="Infinity" style="-fx-background-color:#6366F1; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:14; -fx-padding:13;"/>
+            <Button text="Users" maxWidth="Infinity" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+            <Button text="Classes" maxWidth="Infinity" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+            <Button text="Reports" maxWidth="Infinity" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Button fx:id="btnLogout" text="Logout" maxWidth="Infinity"
+                    style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:14; -fx-padding:13;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="24">
+            <padding><Insets top="30" right="34" bottom="30" left="34"/></padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <VBox spacing="4">
+                    <Label text="Admin Dashboard" textFill="#0F172A">
+                        <font><Font name="System Bold" size="32"/></font>
+                    </Label>
+                    <Label text="Manage users, classes, courses, and system reports." textFill="#64748B"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <TextField fx:id="txtSearch" promptText="Search data..." prefWidth="300" prefHeight="42"
+                           style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#E2E8F0; -fx-border-radius:14; -fx-padding:0 14;"/>
+            </HBox>
+
+            <HBox spacing="18">
+                <VBox spacing="10" prefWidth="240" style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="Total Users" textFill="#64748B"/>
+                    <Label fx:id="lblTotalUsers" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Admin, Dosen, Student" textFill="#6366F1"/>
+                </VBox>
+
+                <VBox spacing="10" prefWidth="240" style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="Total Classes" textFill="#64748B"/>
+                    <Label fx:id="lblTotalClasses" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Active classes" textFill="#22C55E"/>
+                </VBox>
+
+                <VBox spacing="10" prefWidth="240" style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="Total Courses" textFill="#64748B"/>
+                    <Label fx:id="lblTotalCourses" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Available subjects" textFill="#F97316"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24" VBox.vgrow="ALWAYS">
+
+                <VBox spacing="16" prefWidth="470" style="-fx-background-color:white; -fx-background-radius:24; -fx-padding:24;">
+                    <Label text="Manage Users" textFill="#0F172A">
+                        <font><Font name="System Bold" size="22"/></font>
+                    </Label>
+
+                    <TextField fx:id="txtUserId" promptText="User ID"/>
+                    <TextField fx:id="txtUserName" promptText="Nama User"/>
+                    <TextField fx:id="txtUserEmail" promptText="Email"/>
+                    <PasswordField fx:id="txtUserPassword" promptText="Password"/>
+                    <ComboBox fx:id="cmbUserRole" promptText="Role: ADMIN / DOSEN / MAHASISWA" prefWidth="420"/>
+
+                    <HBox spacing="10">
+                        <Button fx:id="btnAddUser" text="Add" prefWidth="95" style="-fx-background-color:#6366F1; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnEditUser" text="Edit" prefWidth="95" style="-fx-background-color:#F59E0B; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnDeleteUser" text="Delete" prefWidth="95" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnClearUser" text="Clear" prefWidth="95" style="-fx-background-color:#64748B; -fx-text-fill:white; -fx-background-radius:12;"/>
+                    </HBox>
+
+                    <TextField fx:id="txtSearchUser" promptText="Search user..."/>
+
+                    <TableView fx:id="tblUsers" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colUserId" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="colUserName" text="Nama" prefWidth="135"/>
+                            <TableColumn fx:id="colUserEmail" text="Email" prefWidth="160"/>
+                            <TableColumn fx:id="colUserRole" text="Role" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox spacing="16" HBox.hgrow="ALWAYS" style="-fx-background-color:white; -fx-background-radius:24; -fx-padding:24;">
+                    <Label text="Manage Classes" textFill="#0F172A">
+                        <font><Font name="System Bold" size="22"/></font>
+                    </Label>
+
+                    <GridPane hgap="14" vgap="14">
+                        <TextField fx:id="txtKelasId" promptText="Kelas ID" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtKelasNama" promptText="Nama Kelas" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtKelasKapasitas" promptText="Kapasitas" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtKelasSemester" promptText="Semester" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <ComboBox fx:id="cmbMatkul" promptText="Mata Kuliah" prefWidth="220" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="cmbDosen" promptText="Dosen Pengajar" prefWidth="220" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <HBox spacing="10">
+                        <Button fx:id="btnAddKelas" text="Add" prefWidth="105" style="-fx-background-color:#6366F1; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnEditKelas" text="Edit" prefWidth="105" style="-fx-background-color:#F59E0B; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnDeleteKelas" text="Delete" prefWidth="105" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnClearKelas" text="Clear" prefWidth="105" style="-fx-background-color:#64748B; -fx-text-fill:white; -fx-background-radius:12;"/>
+                    </HBox>
+
+                    <TextField fx:id="txtSearchKelas" promptText="Search kelas..."/>
+
+                    <TableView fx:id="tblKelas" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colKelasId" text="ID" prefWidth="70"/>
+                            <TableColumn fx:id="colKelasNama" text="Nama Kelas" prefWidth="160"/>
+                            <TableColumn fx:id="colKapasitas" text="Kapasitas" prefWidth="100"/>
+                            <TableColumn fx:id="colSemester" text="Semester" prefWidth="100"/>
+                            <TableColumn fx:id="colDosen" text="Dosen" prefWidth="140"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

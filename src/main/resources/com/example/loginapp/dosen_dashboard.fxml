@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.loginapp.controller.DosenDashboardController"
+            prefWidth="1280" prefHeight="760"
+            style="-fx-background-color: linear-gradient(to bottom right, #EEF2FF, #F8FAFC);">
+
+    <left>
+        <VBox prefWidth="250" spacing="18" style="-fx-background-color: linear-gradient(to bottom, #0F172A, #1E1B4B);">
+            <padding><Insets top="30" right="20" bottom="30" left="20"/></padding>
+
+            <Label text="Dosen LMS" textFill="WHITE">
+                <font><Font name="System Bold" size="26"/></font>
+            </Label>
+            <Label text="Lecturer Dashboard" textFill="#A5B4FC"/>
+
+            <Separator opacity="0.18"/>
+
+            <Button text="Dashboard" maxWidth="Infinity" style="-fx-background-color:#6366F1; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:14; -fx-padding:13;"/>
+            <Button text="Assignments" maxWidth="Infinity" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+            <Button text="Materials" maxWidth="Infinity" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+            <Button text="Submissions" maxWidth="Infinity" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-padding:13;"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <Button fx:id="btnLogout" text="Logout" maxWidth="Infinity"
+                    style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:14; -fx-padding:13;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="24">
+            <padding><Insets top="30" right="34" bottom="30" left="34"/></padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="16">
+                <VBox spacing="4">
+                    <Label fx:id="lblWelcome" text="Dosen Dashboard" textFill="#0F172A">
+                        <font><Font name="System Bold" size="32"/></font>
+                    </Label>
+                    <Label text="Create assignments, upload materials, and review student submissions." textFill="#64748B"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <TextField fx:id="txtSearch" promptText="Search assignment or material..." prefWidth="300" prefHeight="42"
+                           style="-fx-background-color:white; -fx-background-radius:14; -fx-border-color:#E2E8F0; -fx-border-radius:14; -fx-padding:0 14;"/>
+            </HBox>
+
+            <HBox spacing="18">
+                <VBox spacing="10" prefWidth="240" style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="My Assignments" textFill="#64748B"/>
+                    <Label fx:id="lblTotalAssignment" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Created by lecturer" textFill="#6366F1"/>
+                </VBox>
+
+                <VBox spacing="10" prefWidth="240" style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="Materials" textFill="#64748B"/>
+                    <Label fx:id="lblTotalMateri" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Uploaded files" textFill="#22C55E"/>
+                </VBox>
+
+                <VBox spacing="10" prefWidth="240" style="-fx-background-color:white; -fx-background-radius:22; -fx-padding:22;">
+                    <Label text="Submissions" textFill="#64748B"/>
+                    <Label fx:id="lblTotalSubmission" text="0" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Need grading" textFill="#F97316"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24" VBox.vgrow="ALWAYS">
+
+                <VBox spacing="16" HBox.hgrow="ALWAYS" style="-fx-background-color:white; -fx-background-radius:24; -fx-padding:24;">
+                    <Label text="Edit Mode - Assignment" textFill="#0F172A">
+                        <font><Font name="System Bold" size="22"/></font>
+                    </Label>
+
+                    <GridPane hgap="14" vgap="14">
+                        <TextField fx:id="txtAssignmentId" promptText="Assignment ID" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtAssignmentNama" promptText="Nama Assignment" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <ComboBox fx:id="cmbKelas" promptText="Pilih Kelas" prefWidth="220" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <DatePicker fx:id="dpDeadline" promptText="Deadline" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <TextField fx:id="txtAssignmentFile" promptText="File Assignment" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtJamAkses" promptText="Jam Akses" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    </GridPane>
+
+                    <TextArea fx:id="txtAssignmentDeskripsi" promptText="Deskripsi assignment..." prefRowCount="3"/>
+
+                    <HBox spacing="10">
+                        <Button fx:id="btnChooseAssignmentFile" text="Choose File" prefWidth="120" style="-fx-background-color:#E0E7FF; -fx-text-fill:#3730A3; -fx-background-radius:12;"/>
+                        <Button fx:id="btnAddAssignment" text="Add" prefWidth="90" style="-fx-background-color:#6366F1; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnEditAssignment" text="Edit" prefWidth="90" style="-fx-background-color:#F59E0B; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnDeleteAssignment" text="Delete" prefWidth="90" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:12;"/>
+                    </HBox>
+
+                    <TableView fx:id="tblAssignments" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colAssignmentId" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="colAssignmentName" text="Assignment" prefWidth="180"/>
+                            <TableColumn fx:id="colAssignmentClass" text="Kelas" prefWidth="130"/>
+                            <TableColumn fx:id="colDeadline" text="Deadline" prefWidth="130"/>
+                            <TableColumn fx:id="colAssignmentFile" text="File" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox spacing="16" prefWidth="390" style="-fx-background-color:white; -fx-background-radius:24; -fx-padding:24;">
+                    <Label text="Upload Materi" textFill="#0F172A">
+                        <font><Font name="System Bold" size="22"/></font>
+                    </Label>
+
+                    <TextField fx:id="txtMateriId" promptText="Materi ID"/>
+                    <TextField fx:id="txtMateriNama" promptText="Nama Materi"/>
+                    <ComboBox fx:id="cmbMateriKelas" promptText="Pilih Kelas" prefWidth="340"/>
+                    <TextField fx:id="txtMateriFile" promptText="File Materi"/>
+                    <TextArea fx:id="txtMateriDeskripsi" promptText="Deskripsi materi..." prefRowCount="3"/>
+
+                    <HBox spacing="10">
+                        <Button fx:id="btnChooseMateriFile" text="Choose File" prefWidth="105" style="-fx-background-color:#E0E7FF; -fx-text-fill:#3730A3; -fx-background-radius:12;"/>
+                        <Button fx:id="btnAddMateri" text="Add" prefWidth="70" style="-fx-background-color:#6366F1; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnEditMateri" text="Edit" prefWidth="70" style="-fx-background-color:#F59E0B; -fx-text-fill:white; -fx-background-radius:12;"/>
+                        <Button fx:id="btnDeleteMateri" text="Delete" prefWidth="80" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:12;"/>
+                    </HBox>
+
+                    <TableView fx:id="tblMateri" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colMateriId" text="ID" prefWidth="55"/>
+                            <TableColumn fx:id="colMateriNama" text="Materi" prefWidth="150"/>
+                            <TableColumn fx:id="colMateriFile" text="File" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
