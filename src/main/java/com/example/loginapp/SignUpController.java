@@ -1,105 +1,95 @@
 package com.example.loginapp;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class SignUpController {
 
-    @FXML
-    private TextField usernameField;
+    @FXML private TextField txtNama;
+    @FXML private TextField txtEmail;
+    @FXML private PasswordField txtPassword;
+    @FXML private PasswordField txtConfirmPassword;
+    @FXML private ComboBox<String> cmbRole;
+    @FXML private Button btnSignUp;
+    @FXML private Hyperlink btnLogin;
 
     @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private PasswordField confirmPasswordField;
-
-    private Stage stage;
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void initialize() {
+        cmbRole.getItems().addAll("Admin", "Dosen", "Student");
+        btnSignUp.setOnAction(e -> signUp());
+        btnLogin.setOnAction(e -> moveTo("login.fxml"));
     }
 
-    @FXML
-    protected void handleSignUpButtonAction(ActionEvent event) {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-        String confirmPassword = confirmPasswordField.getText();
+    private void signUp() {
+        String nama = txtNama.getText();
+        String email = txtEmail.getText();
+        String password = txtPassword.getText();
+        String confirmPassword = txtConfirmPassword.getText();
+        String role = cmbRole.getValue();
 
-        if (!password.equals(confirmPassword)) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Sign Up Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Passwords do not match.");
-            alert.showAndWait();
+        if (nama.isEmpty() || email.isEmpty() || password.isEmpty()
+                || confirmPassword.isEmpty() || role == null) {
+            showAlert("Sign Up Failed", "Semua field wajib diisi.");
             return;
         }
 
-        try {
-            if (signUp(username, password)) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Sign Up Successful");
-                alert.setHeaderText(null);
-                alert.setContentText("Account created successfully.");
-                alert.showAndWait();
+        if (!password.equals(confirmPassword)) {
+            showAlert("Sign Up Failed", "Password tidak sama.");
+            return;
+        }
 
-                loadLoginPage();
-            } else {
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Sign Up Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Failed to create account.");
-                alert.showAndWait();
-            }
-        } catch (SQLException e) {
+        String sql = "INSERT INTO users(nama, email, password, role) VALUES (?, ?, ?, ?)";
+
+        try {
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, nama);
+            ps.setString(2, email);
+            ps.setString(3, password);
+            ps.setString(4, role);
+
+            ps.executeUpdate();
+
+            showAlert("Success", "Akun berhasil dibuat.");
+            moveTo("login.fxml");
+
+        } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Database Error");
-            alert.setHeaderText(null);
-            alert.setContentText("An error occurred while connecting to the database.");
-            alert.showAndWait();
+            showAlert("Database Error", "Gagal menyimpan user.");
         }
     }
 
-    private boolean signUp(String username, String password) throws SQLException {
-        Connection db = DatabaseConnection.getConnection();
-        String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+    private void moveTo(String fxml) {
+        try {
 
-        try (PreparedStatement pstmt = db.prepareStatement(query)) {
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
+            Stage stage = (Stage) btnSignUp.getScene().getWindow();
 
-            int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
-        } catch (SQLException e) {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/loginapp/" + fxml)
+            );
+
+            Scene scene = new Scene(loader.load());
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
     }
 
-    private void loadLoginPage() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-            Parent root = loader.load();
-
-            LoginController controller = loader.getController();
-            controller.setStage(stage);
-
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

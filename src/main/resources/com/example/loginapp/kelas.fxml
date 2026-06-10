@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.loginapp.KelasController"
+            prefWidth="1280"
+            prefHeight="760"
+            style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);">
+
+    <center>
+        <HBox spacing="24">
+            <padding>
+                <Insets top="34" right="36" bottom="34" left="36"/>
+            </padding>
+
+            <VBox spacing="18"
+                  prefWidth="360"
+                  style="-fx-background-color:white;
+                         -fx-background-radius:24;
+                         -fx-padding:26;">
+
+                <Label text="Manage Kelas" textFill="#0F172A">
+                    <font><Font name="System Bold" size="26"/></font>
+                </Label>
+
+                <TextField fx:id="txtKelasId" promptText="Kelas ID" prefHeight="48"/>
+                <TextField fx:id="txtKelasNama" promptText="Nama Kelas" prefHeight="48"/>
+                <TextField fx:id="txtKelasKapasitas" promptText="Kapasitas" prefHeight="48"/>
+                <TextField fx:id="txtKelasSemester" promptText="Semester" prefHeight="48"/>
+
+                <GridPane hgap="12" vgap="12">
+                    <Button fx:id="btnAddKelas" text="Add" prefWidth="140" prefHeight="48"
+                            GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Button fx:id="btnEditKelas" text="Edit" prefWidth="140" prefHeight="48"
+                            GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <Button fx:id="btnDeleteKelas" text="Delete" prefWidth="140" prefHeight="48"
+                            GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Button fx:id="btnClearKelas" text="Clear" prefWidth="140" prefHeight="48"
+                            GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <Button fx:id="btnBack"
+                        text="Back to Dashboard"
+                        prefHeight="48"
+                        maxWidth="Infinity"/>
+            </VBox>
+
+            <VBox spacing="18"
+                  HBox.hgrow="ALWAYS"
+                  style="-fx-background-color:white;
+                         -fx-background-radius:24;
+                         -fx-padding:26;">
+
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Daftar Kelas" textFill="#0F172A">
+                        <font><Font name="System Bold" size="26"/></font>
+                    </Label>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <TextField fx:id="txtSearchKelas"
+                               promptText="Search kelas..."
+                               prefWidth="280"
+                               prefHeight="44"/>
+                </HBox>
+
+                <TableView fx:id="tblKelas" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colKelasId" text="ID" prefWidth="120"/>
+                        <TableColumn fx:id="colKelasNama" text="Nama Kelas" prefWidth="300"/>
+                        <TableColumn fx:id="colKelasKapasitas" text="Kapasitas" prefWidth="180"/>
+                        <TableColumn fx:id="colKelasSemester" text="Semester" prefWidth="200"/>
+                    </columns>
+                </TableView>
+
+            </VBox>
+
+        </HBox>
+    </center>
+
+</BorderPane>

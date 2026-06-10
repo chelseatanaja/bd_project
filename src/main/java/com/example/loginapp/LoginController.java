@@ -1,94 +1,99 @@
 package com.example.loginapp;
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class LoginController {
 
-    @FXML
-    private TextField usernameField;
+    @FXML private TextField txtEmail;
+    @FXML private PasswordField txtPassword;
+    @FXML private Button btnLogin;
+    @FXML private Hyperlink btnSignUp;
 
     @FXML
-    private PasswordField passwordField;
-
-    private Stage stage;
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void initialize() {
+        btnLogin.setOnAction(e -> login());
+        btnSignUp.setOnAction(e -> moveTo("signup.fxml"));
     }
 
-    @FXML
-    protected void handleLoginButtonAction(ActionEvent event) throws SQLException {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+    private void login() {
+        String email = txtEmail.getText();
+        String password = txtPassword.getText();
 
-        if (validateLogin(username, password)) {
-            loadLandingPage();
-        } else {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Login Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid username or password.");
-            alert.showAndWait();
+        if (email.isEmpty() || password.isEmpty()) {
+            showAlert("Login Failed", "Email dan password wajib diisi.");
+            return;
         }
-    }
 
-    private boolean validateLogin(String username, String password) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
 
-        Connection db = DatabaseConnection.getConnection();
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        try (PreparedStatement pstmt = db.prepareStatement(query)) {
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-
-            ResultSet result = pstmt.executeQuery();
-            return result.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
-
-    private void loadLandingPage() {
-        // Load the landing page
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("landing.fxml"));
-            Parent root = loader.load();
+            Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
 
-            LandingController controller = loader.getController();
-            controller.setStage(stage);
+            ps.setString(1, email);
+            ps.setString(2, password);
 
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String role = rs.getString("role");
+
+                if (role.equalsIgnoreCase("Admin")) {
+                    moveTo("admin_dashboard.fxml");
+                } else if (role.equalsIgnoreCase("Dosen")) {
+                    moveTo("dosen_dashboard.fxml");
+                } else {
+                    moveTo("student_dashboard.fxml");
+                }
+
+            } else {
+                showAlert("Login Failed", "Email atau password salah.");
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Database Error", "Gagal login ke database.");
         }
     }
 
-    @FXML
-    protected void handleSignUpButtonAction(ActionEvent event) {
-        loadSignUpPage();
-    }
-
-    private void loadSignUpPage() {
+    private void moveTo(String fxml) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("signup.fxml"));
-            Parent root = loader.load();
+            String path = "/com/example/loginapp/" + fxml;
+            java.net.URL url = getClass().getResource(path);
 
-            SignUpController controller = loader.getController();
-            controller.setStage(stage);
+            System.out.println("Mencari FXML: " + path);
+            System.out.println("Hasil URL: " + url);
 
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
+            if (url == null) {
+                showAlert("FXML Error", "File tidak ditemukan:\n" + path);
+                return;
+            }
+
+            Stage stage = (Stage) btnLogin.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(url);
+
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

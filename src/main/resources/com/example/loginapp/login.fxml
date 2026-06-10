@@ -1,18 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.loginapp.LoginController" alignment="CENTER" hgap="10" vgap="10">
-    <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.loginapp.LoginController"
+            prefWidth="1000"
+            prefHeight="650"
+            style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);">
 
-    <TextField fx:id="usernameField" promptText="Username" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <PasswordField fx:id="passwordField" promptText="Password" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <left>
+        <VBox prefWidth="430"
+              spacing="28"
+              style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
+            <padding>
+                <Insets top="50" right="42" bottom="45" left="42"/>
+            </padding>
 
-    <Button text="Login" onAction="#handleLoginButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-    <Button text="Sign Up" onAction="#handleSignUpButtonAction" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="▣" textFill="#4F7CFF" style="-fx-font-size:40;"/>
+                <VBox>
+                    <Label text="LMS Admin" textFill="WHITE">
+                        <font><Font name="System Bold" size="28"/></font>
+                    </Label>
+                    <Label text="Database Management" textFill="#CBD5E1"/>
+                </VBox>
+            </HBox>
 
-</GridPane>
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <VBox spacing="16">
+                <Label text="Welcome Back" textFill="WHITE">
+                    <font><Font name="System Bold" size="42"/></font>
+                </Label>
+                <Label text="Login to manage LMS data, classes, assignments, and PostgreSQL records."
+                       textFill="#CBD5E1"
+                       wrapText="true">
+                    <font><Font size="17"/></font>
+                </Label>
+                <Label text="● PostgreSQL Connected" textFill="#4ADE80">
+                    <font><Font name="System Bold" size="15"/></font>
+                </Label>
+            </VBox>
+
+            <Region VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane>
+            <VBox alignment="CENTER"
+                  spacing="22"
+                  maxWidth="410"
+                  style="-fx-background-color:white;
+                         -fx-background-radius:28;
+                         -fx-padding:42;">
+
+                <Label text="Login" textFill="#0F172A">
+                    <font><Font name="System Bold" size="34"/></font>
+                </Label>
+
+                <TextField fx:id="txtEmail"
+                           promptText="Email"
+                           prefWidth="320"
+                           prefHeight="50"/>
+
+                <PasswordField fx:id="txtPassword"
+                               promptText="Password"
+                               prefWidth="320"
+                               prefHeight="50"/>
+
+                <Button fx:id="btnLogin"
+                        text="LOGIN"
+                        prefWidth="320"
+                        prefHeight="52"
+                        style="-fx-background-color: linear-gradient(to right, #4F46E5, #2563EB);
+                               -fx-text-fill:white;
+                               -fx-font-weight:bold;
+                               -fx-background-radius:15;"/>
+
+                <HBox alignment="CENTER" spacing="5">
+                    <Label text="Don't have an account?"/>
+                    <Hyperlink fx:id="btnSignUp" text="Sign Up"/>
+                </HBox>
+
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>

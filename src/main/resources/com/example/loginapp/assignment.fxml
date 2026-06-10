@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.loginapp.AssignmentController"
+            prefWidth="1280"
+            prefHeight="760"
+            style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);">
+
+    <center>
+        <VBox spacing="22">
+            <padding>
+                <Insets top="34" right="36" bottom="34" left="36"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT">
+                <VBox>
+                    <Label text="Manage Assignment" textFill="#0F172A">
+                        <font><Font name="System Bold" size="34"/></font>
+                    </Label>
+                    <Label text="Create, update, and manage assignment data" textFill="#64748B"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Button fx:id="btnBack" text="Back" prefWidth="110" prefHeight="44"/>
+            </HBox>
+
+            <VBox spacing="16"
+                  style="-fx-background-color:white;
+                         -fx-background-radius:24;
+                         -fx-padding:24;">
+
+                <GridPane hgap="16" vgap="16">
+                    <TextField fx:id="txtAssignmentId" promptText="Assignment ID"
+                               prefHeight="46"
+                               GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+
+                    <TextField fx:id="txtAssignmentNama" promptText="Nama Assignment"
+                               prefHeight="46"
+                               GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <DatePicker fx:id="dpTanggalUnggah" promptText="Tanggal Unggah"
+                                prefHeight="46"
+                                GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+
+                    <DatePicker fx:id="dpDeadline" promptText="Deadline"
+                                prefHeight="46"
+                                GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <TextField fx:id="txtAssignmentFile" promptText="File Assignment"
+                               prefHeight="46"
+                               GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+
+                    <TextField fx:id="txtAssignmentJamAkses" promptText="Jam Akses"
+                               prefHeight="46"
+                               GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <TextArea fx:id="txtAssignmentDeskripsi"
+                          promptText="Deskripsi assignment..."
+                          prefRowCount="3"/>
+
+                <HBox spacing="12">
+                    <Button fx:id="btnAddAssignment" text="Add" prefWidth="120" prefHeight="46"/>
+                    <Button fx:id="btnEditAssignment" text="Edit" prefWidth="120" prefHeight="46"/>
+                    <Button fx:id="btnDeleteAssignment" text="Delete" prefWidth="120" prefHeight="46"/>
+                    <Button fx:id="btnClearAssignment" text="Clear" prefWidth="120" prefHeight="46"/>
+                </HBox>
+
+            </VBox>
+
+            <VBox spacing="16"
+                  VBox.vgrow="ALWAYS"
+                  style="-fx-background-color:white;
+                         -fx-background-radius:24;
+                         -fx-padding:24;">
+
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Daftar Assignment" textFill="#0F172A">
+                        <font><Font name="System Bold" size="24"/></font>
+                    </Label>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <TextField fx:id="txtSearchAssignment"
+                               promptText="Search assignment..."
+                               prefWidth="280"
+                               prefHeight="44"/>
+                </HBox>
+
+                <TableView fx:id="tblAssignment" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colAssignmentId" text="ID" prefWidth="90"/>
+                        <TableColumn fx:id="colAssignmentNama" text="Assignment" prefWidth="260"/>
+                        <TableColumn fx:id="colTanggalUnggah" text="Tanggal Upload" prefWidth="160"/>
+                        <TableColumn fx:id="colDeadline" text="Deadline" prefWidth="160"/>
+                        <TableColumn fx:id="colAssignmentFile" text="File" prefWidth="180"/>
+                    </columns>
+                </TableView>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>
