@@ -13,59 +13,74 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="650" prefWidth="1000" style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.loginapp.LoginController">
+<BorderPane prefHeight="760" prefWidth="1280"
+            style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.loginapp.LoginController">
 
     <left>
-        <VBox prefWidth="430" spacing="28" style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
+        <VBox prefWidth="480" spacing="28"
+              style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
             <padding>
-                <Insets bottom="45" left="42" right="42" top="50" />
+                <Insets bottom="45" left="48" right="48" top="56"/>
             </padding>
 
             <HBox alignment="CENTER_LEFT" spacing="12">
-                <Label style="-fx-font-size:40;" text="▣" textFill="#4F7CFF" />
+                <Label style="-fx-font-size:40;" text="▣" textFill="#4F7CFF"/>
                 <VBox>
-                    <Label prefWidth="335.0" text="Charm School" textFill="WHITE">
-                        <font><Font name="System Bold" size="42.0" /></font>
+                    <Label text="Charm School" textFill="WHITE">
+                        <font><Font name="System Bold" size="42"/></font>
                     </Label>
-                    <Label text="Database Management" textFill="#CBD5E1" />
+                    <Label text="Database Management" textFill="#CBD5E1"/>
                 </VBox>
             </HBox>
 
-            <Region VBox.vgrow="ALWAYS" />
+            <Region VBox.vgrow="ALWAYS"/>
 
             <VBox spacing="16">
                 <Label text="Welcome Back" textFill="WHITE">
-                    <font><Font name="System Bold" size="42" /></font>
+                    <font><Font name="System Bold" size="42"/></font>
                 </Label>
-                <Label text="Login to manage LMS data, classes, assignments, and PostgreSQL records." textFill="#CBD5E1" wrapText="true">
-                    <font><Font size="17" /></font>
-                </Label>
-                <Label textFill="#4ADE80">
-                    <font><Font name="System Bold" size="15" /></font>
+                <Label text="Login to manage LMS data, classes, assignments, and PostgreSQL records."
+                       textFill="#CBD5E1" wrapText="true">
+                    <font><Font size="17"/></font>
                 </Label>
             </VBox>
 
-            <Region VBox.vgrow="ALWAYS" />
+            <Region VBox.vgrow="ALWAYS"/>
         </VBox>
     </left>
 
     <center>
         <StackPane>
-            <VBox alignment="CENTER" maxWidth="410.0" prefHeight="650.0" prefWidth="476.0" spacing="22" style="-fx-background-color:white;                          -fx-background-radius:28;                          -fx-padding:42;">
+            <VBox alignment="CENTER" maxWidth="440" spacing="10"
+                  style="-fx-background-color:white; -fx-background-radius:28; -fx-padding:48;">
 
                 <Label text="Login" textFill="#0F172A">
-                    <font><Font name="System Bold" size="34" /></font>
+                    <font><Font name="System Bold" size="34"/></font>
                 </Label>
 
-                <TextField fx:id="txtEmail" prefHeight="50" prefWidth="320" promptText="Email" />
+                <!-- Email -->
+                <TextField fx:id="txtEmail" prefHeight="50" prefWidth="340" promptText="Email"
+                           style="-fx-background-radius:10; -fx-border-color:#E2E8F0; -fx-border-radius:10; -fx-padding:0 14;"/>
+                <Label fx:id="lblEmailError" textFill="#EF4444" style="-fx-font-size:12;" prefWidth="340"/>
 
-                <PasswordField fx:id="txtPassword" prefHeight="50" prefWidth="320" promptText="Password" />
+                <!-- Password -->
+                <PasswordField fx:id="txtPassword" prefHeight="50" prefWidth="340" promptText="Password"
+                               style="-fx-background-radius:10; -fx-border-color:#E2E8F0; -fx-border-radius:10; -fx-padding:0 14;"/>
+                <Label fx:id="lblPasswordError" textFill="#EF4444" style="-fx-font-size:12;" prefWidth="340"/>
 
-                <Button fx:id="btnLogin" prefHeight="52" prefWidth="320" style="-fx-background-color: linear-gradient(to right, #4F46E5, #2563EB);                                -fx-text-fill:white;                                -fx-font-weight:bold;                                -fx-background-radius:15;" text="LOGIN" />
+                <Region prefHeight="8"/>
+
+                <Button fx:id="btnLogin" prefHeight="52" prefWidth="340" text="LOGIN"
+                        style="-fx-background-color: linear-gradient(to right, #4F46E5, #2563EB);
+                               -fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:15;
+                               -fx-background-radius:15; -fx-cursor:hand;"/>
 
                 <HBox alignment="CENTER" spacing="5">
-                    <Label text="Don't have an account?" />
-                    <Hyperlink fx:id="btnSignUp" text="Sign Up" />
+                    <Label text="Don't have an account?"/>
+                    <Hyperlink fx:id="btnSignUp" text="Sign Up"/>
                 </HBox>
 
             </VBox>

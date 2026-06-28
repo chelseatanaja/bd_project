@@ -14,23 +14,43 @@ public class LoginController {
 
     @FXML private TextField txtEmail;
     @FXML private PasswordField txtPassword;
+    @FXML private Label lblEmailError;
+    @FXML private Label lblPasswordError;
     @FXML private Button btnLogin;
     @FXML private Hyperlink btnSignUp;
 
     @FXML
     public void initialize() {
+        lblEmailError.setVisible(false);
+        lblPasswordError.setVisible(false);
+
         btnLogin.setOnAction(e -> login());
         btnSignUp.setOnAction(e -> moveTo("signup.fxml"));
     }
 
     private void login() {
-        String email = txtEmail.getText();
-        String password = txtPassword.getText();
+        String email = txtEmail.getText().trim();
+        String password = txtPassword.getText().trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            showAlert("Login Failed", "Email dan password wajib diisi.");
-            return;
+        boolean valid = true;
+
+        if (email.isEmpty()) {
+            lblEmailError.setText("Email wajib diisi.");
+            lblEmailError.setVisible(true);
+            valid = false;
+        } else {
+            lblEmailError.setVisible(false);
         }
+
+        if (password.isEmpty()) {
+            lblPasswordError.setText("Password wajib diisi.");
+            lblPasswordError.setVisible(true);
+            valid = false;
+        } else {
+            lblPasswordError.setVisible(false);
+        }
+
+        if (!valid) return;
 
         String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
 
@@ -45,6 +65,10 @@ public class LoginController {
 
             if (rs.next()) {
                 String role = rs.getString("role");
+                int userId = rs.getInt("id");
+                String nama = rs.getString("nama");
+
+                Session.setSession(userId, nama, email, role);
 
                 if (role.equalsIgnoreCase("Admin")) {
                     moveTo("admin_dashboard.fxml");
@@ -60,7 +84,7 @@ public class LoginController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Database Error", "Gagal login ke database.");
+            showAlert("Database Error", "Gagal login ke database "+ e.getMessage());
         }
     }
 
@@ -86,6 +110,7 @@ public class LoginController {
 
         } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Error Detail", e.getMessage());
         }
     }
 
