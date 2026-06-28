@@ -1,73 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.loginapp.AdminDashboardController"
-            prefWidth="1280" prefHeight="760"
-            style="-fx-background-color: #F1F5F9;">
+<BorderPane prefHeight="760" prefWidth="1280" style="-fx-background-color: #F1F5F9;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.loginapp.AdminDashboardController">
 
     <!-- ========== SIDEBAR ========== -->
     <left>
-        <VBox prefWidth="240" spacing="6"
-              style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
-            <padding><Insets top="28" right="14" bottom="28" left="14"/></padding>
+        <VBox prefWidth="240" spacing="6" style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
+            <padding><Insets bottom="28" left="14" right="14" top="28" /></padding>
 
             <!-- Logo -->
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="▣" textFill="#4F7CFF" style="-fx-font-size:30;"/>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="64" fitWidth="64" preserveRatio="true">
+                    <image>
+                        <Image url="@CHARM_SCHOOL.png" />
+                    </image>
+                </ImageView>
                 <VBox spacing="1">
-                    <Label text="LMS Admin" textFill="WHITE">
-                        <font><Font name="System Bold" size="18"/></font>
+                    <Label text="Charm School" textFill="WHITE">
+                        <font><Font name="System Bold" size="18" /></font>
                     </Label>
-                    <Label text="Management" textFill="#94A3B8" style="-fx-font-size:11;"/>
+                    <Label style="-fx-font-size:11;" text="LMS" textFill="#94A3B8" />
                 </VBox>
             </HBox>
 
-            <Separator opacity="0.2" style="-fx-padding:6 0;"/>
+            <Separator opacity="0.2" style="-fx-padding:6 0;" />
 
             <!-- Nav buttons -->
-            <Button fx:id="btnNavDashboard" text="🏠   Dashboard"
-                    maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color: linear-gradient(to right,#4F46E5,#2563EB);
-                           -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold;
-                           -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;"
-                    onAction="#handleNavDashboard"/>
+            <Button fx:id="btnNavDashboard" maxWidth="Infinity" onAction="#handleNavDashboard" prefHeight="46" style="-fx-background-color: linear-gradient(to right,#4F46E5,#2563EB);                            -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold;                            -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;" text="🏠   Dashboard" />
 
-            <Button fx:id="btnNavKelas" text="🖥   Manage Kelas"
-                    maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
-                           -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;
-                           -fx-background-radius:12;"
-                    onAction="#handleNavKelas"/>
+            <Button fx:id="btnNavKelas" maxWidth="Infinity" onAction="#handleNavKelas" prefHeight="46" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;                            -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;                            -fx-background-radius:12;" text="🖥   Manage Kelas" />
 
-            <Button fx:id="btnNavStudents" text="👥   Manage Students"
-                    maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
-                           -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;
-                           -fx-background-radius:12;"
-                    onAction="#handleNavStudents"/>
+            <Button fx:id="btnNavStudents" maxWidth="Infinity" onAction="#handleNavStudents" prefHeight="46" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;                            -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;                            -fx-background-radius:12;" text="👥   Manage Users" />
 
-            <Region VBox.vgrow="ALWAYS"/>
+            <Region VBox.vgrow="ALWAYS" />
 
-            <!-- DB Status -->
-            <VBox spacing="6" style="-fx-background-color:rgba(255,255,255,0.07); -fx-background-radius:12; -fx-padding:14;">
-                <Label text="● PostgreSQL" textFill="#4ADE80" style="-fx-font-size:13; -fx-font-weight:bold;"/>
-                <Label text="Connected" textFill="#94A3B8" style="-fx-font-size:11;"/>
-            </VBox>
+            <!--            &lt;!&ndash; DB Status &ndash;&gt;-->
+            <!--            <VBox spacing="6" style="-fx-background-color:rgba(255,255,255,0.07); -fx-background-radius:12; -fx-padding:14;">-->
+            <!--                <Label text="● PostgreSQL" textFill="#4ADE80" style="-fx-font-size:13; -fx-font-weight:bold;"/>-->
+            <!--                <Label text="Connected" textFill="#94A3B8" style="-fx-font-size:11;"/>-->
+            <!--            </VBox>-->
 
             <!-- User info + Logout -->
             <VBox spacing="6" style="-fx-background-color:rgba(255,255,255,0.07); -fx-background-radius:12; -fx-padding:14;">
-                <Label fx:id="lblSidebarNama" text="Admin" textFill="WHITE" style="-fx-font-weight:bold;"/>
-                <Label fx:id="lblSidebarEmail" text="admin@lms.com" textFill="#94A3B8" style="-fx-font-size:11;"/>
-                <Button text="Logout" maxWidth="Infinity" prefHeight="36"
-                        style="-fx-background-color:#EF4444; -fx-text-fill:white;
-                               -fx-background-radius:8; -fx-font-size:13; -fx-cursor:hand;"
-                        onAction="#handleLogout"/>
+                <Label fx:id="lblSidebarNama" style="-fx-font-weight:bold;" text="Admin" textFill="WHITE" />
+                <Label fx:id="lblSidebarEmail" style="-fx-font-size:11;" text="admin@lms.com" textFill="#94A3B8" />
+                <Button maxWidth="Infinity" onAction="#handleLogout" prefHeight="36" style="-fx-background-color:#EF4444; -fx-text-fill:white;                                -fx-background-radius:8; -fx-font-size:13; -fx-cursor:hand;" text="Logout" />
             </VBox>
         </VBox>
     </left>
@@ -75,55 +57,50 @@
     <!-- ========== MAIN CONTENT ========== -->
     <center>
         <VBox spacing="0">
-            <!-- Content Area switched by nav -->
             <StackPane VBox.vgrow="ALWAYS">
 
                 <!-- DASHBOARD VIEW -->
                 <VBox fx:id="viewDashboard" spacing="22" visible="true">
-                    <padding><Insets top="30" right="32" bottom="30" left="32"/></padding>
+                    <padding><Insets bottom="30" left="32" right="32" top="30" /></padding>
 
                     <VBox spacing="4">
                         <Label text="Academic Dashboard" textFill="#0F172A">
-                            <font><Font name="System Bold" size="28"/></font>
+                            <font><Font name="System Bold" size="28" /></font>
                         </Label>
-                        <Label text="Overview data akademik" textFill="#64748B"/>
+                        <Label text="Overview data akademik" textFill="#64748B" />
                     </VBox>
 
                     <HBox spacing="18">
-                        <VBox prefWidth="200" spacing="10"
-                              style="-fx-background-color:white; -fx-background-radius:18; -fx-padding:20;">
-                            <Label text="Total Kelas" textFill="#64748B" style="-fx-font-size:13;"/>
+                        <VBox prefWidth="200" spacing="10" style="-fx-background-color:white; -fx-background-radius:18; -fx-padding:20;">
+                            <Label style="-fx-font-size:13;" text="Total Kelas" textFill="#64748B" />
                             <Label fx:id="lblTotalKelas" text="0" textFill="#0F172A">
-                                <font><Font name="System Bold" size="32"/></font>
+                                <font><Font name="System Bold" size="32" /></font>
                             </Label>
                         </VBox>
-                        <VBox prefWidth="200" spacing="10"
-                              style="-fx-background-color:white; -fx-background-radius:18; -fx-padding:20;">
-                            <Label text="Total Students" textFill="#64748B" style="-fx-font-size:13;"/>
+                        <VBox prefWidth="200" spacing="10" style="-fx-background-color:white; -fx-background-radius:18; -fx-padding:20;">
+                            <Label style="-fx-font-size:13;" text="Total Students" textFill="#64748B" />
                             <Label fx:id="lblTotalUser" text="0" textFill="#0F172A">
-                                <font><Font name="System Bold" size="32"/></font>
+                                <font><Font name="System Bold" size="32" /></font>
                             </Label>
                         </VBox>
-                        <VBox prefWidth="200" spacing="10"
-                              style="-fx-background-color:white; -fx-background-radius:18; -fx-padding:20;">
-                            <Label text="Total Assignment" textFill="#64748B" style="-fx-font-size:13;"/>
+                        <VBox prefWidth="200" spacing="10" style="-fx-background-color:white; -fx-background-radius:18; -fx-padding:20;">
+                            <Label style="-fx-font-size:13;" text="Total Assignment" textFill="#64748B" />
                             <Label fx:id="lblTotalAssignment" text="0" textFill="#0F172A">
-                                <font><Font name="System Bold" size="32"/></font>
+                                <font><Font name="System Bold" size="32" /></font>
                             </Label>
                         </VBox>
                     </HBox>
 
-                    <VBox spacing="14" VBox.vgrow="ALWAYS"
-                          style="-fx-background-color:white; -fx-background-radius:18; -fx-padding:22;">
+                    <VBox spacing="14" style="-fx-background-color:white; -fx-background-radius:18; -fx-padding:22;" VBox.vgrow="ALWAYS">
                         <Label text="Recent Activity" textFill="#0F172A">
-                            <font><Font name="System Bold" size="18"/></font>
+                            <font><Font name="System Bold" size="18" /></font>
                         </Label>
                         <TableView fx:id="tblRecent" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="colRecentId" text="ID" prefWidth="80"/>
-                                <TableColumn fx:id="colRecentType" text="Tipe" prefWidth="120"/>
-                                <TableColumn fx:id="colRecentName" text="Nama" prefWidth="300"/>
-                                <TableColumn fx:id="colRecentStatus" text="Status" prefWidth="120"/>
+                                <TableColumn fx:id="colRecentId" prefWidth="80" text="ID" />
+                                <TableColumn fx:id="colRecentType" prefWidth="120" text="Tipe" />
+                                <TableColumn fx:id="colRecentName" prefWidth="300" text="Nama" />
+                                <TableColumn fx:id="colRecentStatus" prefWidth="120" text="Status" />
                             </columns>
                         </TableView>
                     </VBox>
@@ -131,102 +108,96 @@
 
                 <!-- KELAS VIEW -->
                 <VBox fx:id="viewKelas" spacing="16" visible="false">
-                    <padding><Insets top="30" right="32" bottom="30" left="32"/></padding>
+                    <padding><Insets bottom="30" left="32" right="32" top="30" /></padding>
 
                     <Label text="Manage Kelas" textFill="#0F172A">
-                        <font><Font name="System Bold" size="26"/></font>
+                        <font><Font name="System Bold" size="26" /></font>
                     </Label>
 
                     <HBox spacing="18" VBox.vgrow="ALWAYS">
-                        <!-- Form -->
-                        <VBox spacing="12" prefWidth="280"
-                              style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
-                            <Label text="Form Kelas" textFill="#334155" style="-fx-font-weight:bold;"/>
-                            <TextField fx:id="txtKelasId" promptText="ID Kelas" prefHeight="42"
-                                       style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                            <TextField fx:id="txtKelasNama" promptText="Nama Kelas" prefHeight="42"
-                                       style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                            <TextField fx:id="txtKelasKapasitas" promptText="Kapasitas" prefHeight="42"
-                                       style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                            <TextField fx:id="txtKelasSemester" promptText="Semester" prefHeight="42"
-                                       style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                            <Button fx:id="btnAddKelas" text="＋  Tambah" maxWidth="Infinity" prefHeight="42"
-                                    style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                    onAction="#handleAddKelas"/>
-                            <Button fx:id="btnEditKelas" text="✎  Edit" maxWidth="Infinity" prefHeight="42"
-                                    style="-fx-background-color:#2563EB; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                    onAction="#handleEditKelas"/>
-                            <Button fx:id="btnDeleteKelas" text="🗑  Hapus" maxWidth="Infinity" prefHeight="42"
-                                    style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                    onAction="#handleDeleteKelas"/>
-                            <Button fx:id="btnClearKelas" text="⊗  Clear" maxWidth="Infinity" prefHeight="42"
-                                    style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                    onAction="#handleClearKelas"/>
+                        <!-- Form Kelas + Assign Student -->
+                        <VBox prefWidth="300" spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                            <Label style="-fx-font-weight:bold; -fx-font-size:14;" text="Form Kelas" textFill="#334155" />
+                            <TextField fx:id="txtKelasId" prefHeight="42" promptText="ID Kelas" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                            <TextField fx:id="txtKelasNama" prefHeight="42" promptText="Nama Kelas" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                            <TextField fx:id="txtKelasKapasitas" prefHeight="42" promptText="Kapasitas" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                            <TextField fx:id="txtKelasSemester" prefHeight="42" promptText="Semester" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+
+                            <Button fx:id="btnAddKelas" maxWidth="Infinity" onAction="#handleAddKelas" prefHeight="42" style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="＋  Tambah" />
+                            <Button fx:id="btnEditKelas" maxWidth="Infinity" onAction="#handleEditKelas" prefHeight="42" style="-fx-background-color:#2563EB; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="✎  Edit" />
+                            <Button fx:id="btnDeleteKelas" maxWidth="Infinity" onAction="#handleDeleteKelas" prefHeight="42" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="🗑  Hapus" />
+                            <Button fx:id="btnClearKelas" maxWidth="Infinity" onAction="#handleClearKelas" prefHeight="42" style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="⊗  Clear" />
+
+                            <!-- Separator -->
+                            <Separator />
+
+                            <!-- Assign Student ke Kelas -->
+                            <Label style="-fx-font-weight:bold; -fx-font-size:14;" text="Assign Mahasiswa" textFill="#334155" />
+                            <Label style="-fx-font-size:11;" text="Pilih mahasiswa untuk ditambahkan ke kelas yang dipilih." textFill="#94A3B8" wrapText="true" />
+                            <MenuButton fx:id="cmbAssignStudent" maxWidth="Infinity" prefHeight="42" style="-fx-background-color:white; -fx-border-color:#E2E8F0;                    -fx-border-radius:8; -fx-background-radius:8;                    -fx-text-fill:#334155; -fx-alignment:CENTER_LEFT;" text="Pilih Mahasiswa..." />
+                            <Button fx:id="btnAssignStudent" maxWidth="Infinity" onAction="#handleAssignStudent" prefHeight="42" style="-fx-background-color:#059669; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="➕  Assign ke Kelas" />
                         </VBox>
 
-                        <!-- Table -->
-                        <VBox spacing="12" HBox.hgrow="ALWAYS"
-                              style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                        <!-- Table Kelas -->
+                        <VBox spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;" HBox.hgrow="ALWAYS">
                             <HBox alignment="CENTER_LEFT" spacing="12">
-                                <Label text="Daftar Kelas" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:16;"/>
-                                <Region HBox.hgrow="ALWAYS"/>
-                                <TextField fx:id="txtSearchKelas" promptText="Cari kelas..." prefWidth="220" prefHeight="38"
-                                           style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
+                                <Label style="-fx-font-weight:bold; -fx-font-size:16;" text="Daftar Kelas" textFill="#0F172A" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtSearchKelas" prefHeight="38" prefWidth="220" promptText="Cari kelas..." style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
                             </HBox>
                             <TableView fx:id="tblKelas" VBox.vgrow="ALWAYS">
                                 <columns>
-                                    <TableColumn fx:id="colKelasId" text="ID" prefWidth="80"/>
-                                    <TableColumn fx:id="colKelasNama" text="Nama Kelas" prefWidth="220"/>
-                                    <TableColumn fx:id="colKelasKapasitas" text="Kapasitas" prefWidth="120"/>
-                                    <TableColumn fx:id="colKelasSemester" text="Semester" prefWidth="120"/>
+                                    <TableColumn fx:id="colKelasId" prefWidth="60" text="ID" />
+                                    <TableColumn fx:id="colKelasNama" prefWidth="200" text="Nama Kelas" />
+                                    <TableColumn fx:id="colKelasKapasitas" prefWidth="100" text="Kapasitas" />
+                                    <TableColumn fx:id="colKelasSemester" prefWidth="100" text="Semester" />
+                                    <TableColumn fx:id="colKelasStudents" prefWidth="200" text="Mahasiswa Terdaftar" />
                                 </columns>
                             </TableView>
                         </VBox>
                     </HBox>
                 </VBox>
 
-                <!-- STUDENTS VIEW -->
+                <!-- USERS VIEW (sebelumnya STUDENTS) -->
                 <VBox fx:id="viewStudents" spacing="16" visible="false">
-                    <padding><Insets top="30" right="32" bottom="30" left="32"/></padding>
+                    <padding><Insets bottom="30" left="32" right="32" top="30" /></padding>
 
-                    <Label text="Manage Students" textFill="#0F172A">
-                        <font><Font name="System Bold" size="26"/></font>
-                    </Label>
+                    <HBox alignment="CENTER_LEFT" spacing="16">
+                        <Label text="Manage Users" textFill="#0F172A">
+                            <font><Font name="System Bold" size="26" /></font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <!-- Filter bar -->
+                        <HBox alignment="CENTER_RIGHT" spacing="8">
+                            <Label style="-fx-font-size:13;" text="Filter:" textFill="#64748B" />
+                            <ComboBox fx:id="cmbFilterRole" prefHeight="36" prefWidth="140" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8;" />
+                        </HBox>
+                    </HBox>
 
                     <HBox spacing="18" VBox.vgrow="ALWAYS">
-                        <!-- Form -->
-                        <VBox spacing="12" prefWidth="280"
-                              style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
-                            <Label text="Form Student" textFill="#334155" style="-fx-font-weight:bold;"/>
-                            <TextField fx:id="txtStudentId" promptText="ID" prefHeight="42"
-                                       style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" editable="false"/>
-                            <TextField fx:id="txtStudentNama" promptText="Nama" prefHeight="42"
-                                       style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                            <TextField fx:id="txtStudentEmail" promptText="Email" prefHeight="42"
-                                       style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                            <Button fx:id="btnDeleteStudent" text="🗑  Hapus Student" maxWidth="Infinity" prefHeight="42"
-                                    style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                    onAction="#handleDeleteStudent"/>
-                            <Button fx:id="btnClearStudent" text="⊗  Clear" maxWidth="Infinity" prefHeight="42"
-                                    style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                    onAction="#handleClearStudent"/>
+                        <!-- Form User -->
+                        <VBox prefWidth="280" spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                            <Label style="-fx-font-weight:bold;" text="Detail User" textFill="#334155" />
+                            <TextField fx:id="txtStudentId" editable="false" prefHeight="42" promptText="ID" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                            <TextField fx:id="txtStudentNama" prefHeight="42" promptText="Nama" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                            <TextField fx:id="txtStudentEmail" prefHeight="42" promptText="Email" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                            <Button fx:id="btnDeleteStudent" maxWidth="Infinity" onAction="#handleDeleteStudent" prefHeight="42" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="🗑  Hapus User" />
+                            <Button fx:id="btnClearStudent" maxWidth="Infinity" onAction="#handleClearStudent" prefHeight="42" style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="⊗  Clear" />
                         </VBox>
 
-                        <!-- Table -->
-                        <VBox spacing="12" HBox.hgrow="ALWAYS"
-                              style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                        <!-- Table Users -->
+                        <VBox spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;" HBox.hgrow="ALWAYS">
                             <HBox alignment="CENTER_LEFT" spacing="12">
-                                <Label text="Daftar Students" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:16;"/>
-                                <Region HBox.hgrow="ALWAYS"/>
-                                <TextField fx:id="txtSearchStudent" promptText="Cari student..." prefWidth="220" prefHeight="38"
-                                           style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
+                                <Label style="-fx-font-weight:bold; -fx-font-size:16;" text="Daftar Users" textFill="#0F172A" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtSearchStudent" prefHeight="38" prefWidth="220" promptText="Cari user..." style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
                             </HBox>
                             <TableView fx:id="tblStudents" VBox.vgrow="ALWAYS">
                                 <columns>
-                                    <TableColumn fx:id="colStudentId" text="ID" prefWidth="60"/>
-                                    <TableColumn fx:id="colStudentNama" text="Nama" prefWidth="200"/>
-                                    <TableColumn fx:id="colStudentEmail" text="Email" prefWidth="260"/>
-                                    <TableColumn fx:id="colStudentRole" text="Role" prefWidth="100"/>
+                                    <TableColumn fx:id="colStudentId" prefWidth="60" text="ID" />
+                                    <TableColumn fx:id="colStudentNama" prefWidth="200" text="Nama" />
+                                    <TableColumn fx:id="colStudentEmail" prefWidth="240" text="Email" />
+                                    <TableColumn fx:id="colStudentRole" prefWidth="100" text="Role" />
                                 </columns>
                             </TableView>
                         </VBox>

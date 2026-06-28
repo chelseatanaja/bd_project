@@ -21,7 +21,7 @@ public class SignUpController {
 
     @FXML
     public void initialize() {
-        cmbRole.getItems().addAll("Admin", "Dosen", "Student");
+        cmbRole.getItems().addAll("Admin", "Dosen", "Mahasiswa");
         btnSignUp.setOnAction(e -> signUp());
         btnLogin.setOnAction(e -> moveTo("login.fxml"));
     }
