@@ -1,4 +1,4 @@
-package com.example.loginapp.controller;
+package com.example.loginapp;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

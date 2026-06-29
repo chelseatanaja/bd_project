@@ -114,7 +114,6 @@ public class AdminDashboardController {
         tblStudents.setOnMouseClicked(e -> selectStudent());
         txtSearchStudent.textProperty().addListener((obs, o, n) -> searchStudents(n));
         applyModernUsersTableStyle();
-
         showView("dashboard");
         loadDashboard();
     }
@@ -236,7 +235,7 @@ public class AdminDashboardController {
         // Semua mahasiswa
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "SELECT id, nama, email, role FROM users WHERE role='Mahasiswa' ORDER BY nama");
+                     "SELECT id, nama, email, role FROM users WHERE role='Student' ORDER BY nama");
              ResultSet rs = ps.executeQuery()) {
             while (rs.next())
                 allMahasiswaList.add(new Student(rs.getInt("id"), rs.getString("nama"),

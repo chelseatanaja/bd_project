@@ -6,7 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="800" prefWidth="1440" style="-fx-background-color: #F1F5F9;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.loginapp.controller.AdminDashboardController">
+<BorderPane prefHeight="800" prefWidth="1440" style="-fx-background-color: #F1F5F9;" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.loginapp.controller.AdminDashboardController">
 
     <!-- ========== SIDEBAR ========== -->
     <left>
