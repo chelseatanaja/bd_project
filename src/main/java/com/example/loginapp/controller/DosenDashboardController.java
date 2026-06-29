@@ -1,6 +1,7 @@
 package com.example.loginapp.controller;
 
 
+import com.example.loginapp.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -215,15 +217,13 @@ public class DosenDashboardController {
 
 
     // ===================== LOAD DATA =====================
-
-
     private void loadDashboard() {
         // Stats
         try (Connection conn = DatabaseConnection.getConnection(); Statement st = conn.createStatement()) {
             // Total kelas milik dosen ini
             int userId = Session.getUserId();
             PreparedStatement psKelas = conn.prepareStatement(
-                    "SELECT COUNT(*) FROM kelas WHERE dosen_id = ?");
+                    "SELECT COUNT(*) FROM kelas_dosen WHERE dosen_id = ?");
             psKelas.setInt(1, userId);
             ResultSet rs = psKelas.executeQuery();
             if (rs.next()) lblTotalAssignment.setText(String.valueOf(rs.getInt(1)));
@@ -259,7 +259,12 @@ public class DosenDashboardController {
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "SELECT id, nama FROM kelas WHERE dosen_id = ? ORDER BY nama")) {
+                     "SELECT k.id, k.nama\n" +
+                             "FROM kelas k\n" +
+                             "JOIN kelas_dosen kd\n" +
+                             "    ON k.id = kd.kelas_id\n" +
+                             "WHERE kd.dosen_id = ?\n" +
+                             "ORDER BY k.nama")) {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
 
@@ -362,8 +367,14 @@ public class DosenDashboardController {
         try (Connection conn = DatabaseConnection.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(
-                     "SELECT a.id, a.judul, k.nama AS kelas, a.deadline FROM assignment a " +
-                             "LEFT JOIN kelas k ON a.kelas_id = k.id ORDER BY a.id")) {
+                     "SELECT a.id, a.judul, k.nama AS kelas, a.deadline" +
+                             "FROM assignment a" +
+                             "JOIN kelas k" +
+                             "    ON a.kelas_id = k.id" +
+                             "JOIN kelas_dosen kd" +
+                             "    ON k.id = kd.kelas_id" +
+                             "WHERE kd.dosen_id = ?" +
+                             "ORDER BY a.id")) {
             while (rs.next())
                 tugasList.add(new Tugas(rs.getInt("id"), rs.getString("judul"),
                         nvl(rs.getString("kelas")), nvl(rs.getString("deadline"))));
@@ -376,8 +387,14 @@ public class DosenDashboardController {
         try (Connection conn = DatabaseConnection.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(
-                     "SELECT m.id, m.judul, k.nama AS kelas, m.isi FROM materi m " +
-                             "LEFT JOIN kelas k ON m.kelas_id = k.id ORDER BY m.id")) {
+                     "SELECT m.id, m.judul, k.nama AS kelas, m.isi" +
+                             "FROM materi m" +
+                             "JOIN kelas k" +
+                             "    ON m.kelas_id = k.id" +
+                             "JOIN kelas_dosen kd" +
+                             "    ON k.id = kd.kelas_id" +
+                             "WHERE kd.dosen_id = ?" +
+                             "ORDER BY m.id")) {
             while (rs.next())
                 materiList.add(new Materi(rs.getInt("id"), rs.getString("judul"),
                         nvl(rs.getString("kelas")), nvl(rs.getString("isi"))));
@@ -390,12 +407,23 @@ public class DosenDashboardController {
         try (Connection conn = DatabaseConnection.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(
-                     "SELECT s.id, u.nama AS nama_mhs, a.judul AS nama_tugas, " +
-                             "k.nama AS kelas, s.tanggal_submit, s.file_url, s.nilai " +
-                             "FROM submission s " +
-                             "LEFT JOIN users u ON s.user_id = u.id " +
-                             "LEFT JOIN assignment a ON s.assignment_id = a.id " +
-                             "LEFT JOIN kelas k ON a.kelas_id = k.id " +
+                     "SELECT s.id,\n" +
+                             "       u.nama AS nama_mhs," +
+                             "       a.judul AS nama_tugas," +
+                             "       k.nama AS kelas," +
+                             "       s.tanggal_submit," +
+                             "       s.file_url," +
+                             "       s.nilai" +
+                             "FROM submission s" +
+                             "JOIN users u" +
+                             "    ON s.user_id = u.id" +
+                             "JOIN assignment a" +
+                             "    ON s.assignment_id = a.id" +
+                             "JOIN kelas k" +
+                             "    ON a.kelas_id = k.id" +
+                             "JOIN kelas_dosen kd" +
+                             "    ON k.id = kd.kelas_id" +
+                             "WHERE kd.dosen_id = ?" +
                              "ORDER BY s.tanggal_submit DESC")) {
             while (rs.next())
                 submissionList.add(new Submission(rs.getInt("id"),
@@ -414,8 +442,18 @@ public class DosenDashboardController {
         try (Connection conn = DatabaseConnection.getConnection();
              Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(
-                     "SELECT p.id, p.judul, p.isi, k.nama AS kelas, p.tanggal FROM pengumuman p " +
-                             "LEFT JOIN kelas k ON p.kelas_id = k.id ORDER BY p.id DESC")) {
+                     "SELECT p.id," +
+                             "       p.judul," +
+                             "       p.isi," +
+                             "       k.nama AS kelas," +
+                             "       p.tanggal" +
+                             "FROM pengumuman p" +
+                             "JOIN kelas k" +
+                             "    ON p.kelas_id = k.id" +
+                             "JOIN kelas_dosen kd" +
+                             "    ON k.id = kd.kelas_id" +
+                             "WHERE kd.dosen_id = ?" +
+                             "ORDER BY p.id DESC")) {
             while (rs.next())
                 pengumumanList.add(new Pengumuman(rs.getInt("id"), rs.getString("judul"),
                         nvl(rs.getString("isi")), nvl(rs.getString("kelas")), nvl(rs.getString("tanggal"))));
@@ -428,7 +466,12 @@ public class DosenDashboardController {
         int userId = Session.getUserId();
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "SELECT nama FROM kelas WHERE dosen_id = ? ORDER BY nama")) {
+                     "SELECT k.nama\n" +
+                             "FROM kelas k\n" +
+                             "JOIN kelas_dosen kd\n" +
+                             "    ON k.id = kd.kelas_id\n" +
+                             "WHERE kd.dosen_id = ?\n" +
+                             "ORDER BY k.nama")) {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) kelasList.add(rs.getString("nama"));
@@ -531,7 +574,7 @@ public class DosenDashboardController {
              PreparedStatement ps = conn.prepareStatement(
                      "SELECT a.id, a.judul, k.nama AS kelas, a.deadline FROM assignment a " +
                              "LEFT JOIN kelas k ON a.kelas_id = k.id " +
-                             "WHERE LOWER(a.judul) LIKE ? ORDER BY a.id")) {
+                             "WHERE LOWER(a.judul) LIKE ? AND kd.dosen_id = ? ORDER BY a.id")) {
             ps.setString(1, "%" + kw.toLowerCase() + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next())
@@ -606,7 +649,13 @@ public class DosenDashboardController {
         dlg.showAndWait().ifPresent(nilai -> {
             try (Connection conn = DatabaseConnection.getConnection();
                  PreparedStatement ps = conn.prepareStatement("UPDATE submission SET nilai=? WHERE id=?")) {
-                ps.setString(1, nilai.trim());
+                BigDecimal n = new BigDecimal(nilai.trim());
+                if (n.compareTo(BigDecimal.ZERO) < 0 ||
+                        n.compareTo(new BigDecimal("100")) > 0) {
+                    showAlert("Error", "Nilai harus antara 0 dan 100.");
+                    return;
+                }
+                ps.setBigDecimal(1, n);
                 ps.setInt(2, s.getId());
                 ps.executeUpdate();
                 showInfo("Berhasil", "Nilai disimpan."); loadSubmission();
