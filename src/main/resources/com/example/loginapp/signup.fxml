@@ -41,7 +41,7 @@
     <center>
         <StackPane>
             <VBox alignment="CENTER"
-                  spacing="18"
+                  spacing="6"
                   maxWidth="410"
                   style="-fx-background-color:white;
                          -fx-background-radius:28;
@@ -51,15 +51,27 @@
                     <font><Font name="System Bold" size="34"/></font>
                 </Label>
 
+                <Region prefHeight="12"/>
+
                 <TextField fx:id="txtNama" promptText="Full Name" prefWidth="320" prefHeight="48"/>
+                <Label fx:id="lblNamaError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+
                 <TextField fx:id="txtEmail" promptText="Email" prefWidth="320" prefHeight="48"/>
+                <Label fx:id="lblEmailError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+
                 <PasswordField fx:id="txtPassword" promptText="Password" prefWidth="320" prefHeight="48"/>
+                <Label fx:id="lblPasswordError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+
                 <PasswordField fx:id="txtConfirmPassword" promptText="Confirm Password" prefWidth="320" prefHeight="48"/>
+                <Label fx:id="lblConfirmPasswordError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
 
                 <ComboBox fx:id="cmbRole"
                           promptText="Select Role"
                           prefWidth="320"
                           prefHeight="48"/>
+                <Label fx:id="lblRoleError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+
+                <Region prefHeight="6"/>
 
                 <Button fx:id="btnSignUp"
                         text="SIGN UP"

@@ -8,8 +8,14 @@ import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.regex.Pattern;
 
 public class SignUpController {
+
+    // Regex sederhana tapi cukup ketat buat validasi format email
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(
+            "^[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,}$"
+    );
 
     @FXML private TextField txtNama;
     @FXML private TextField txtEmail;
@@ -19,30 +25,89 @@ public class SignUpController {
     @FXML private Button btnSignUp;
     @FXML private Hyperlink btnLogin;
 
+    // Label error inline (di bawah masing-masing field) — perlu ditambahkan di FXML
+    @FXML private Label lblNamaError;
+    @FXML private Label lblEmailError;
+    @FXML private Label lblPasswordError;
+    @FXML private Label lblConfirmPasswordError;
+    @FXML private Label lblRoleError;
+
     @FXML
     public void initialize() {
         cmbRole.getItems().addAll("Admin", "Dosen", "Mahasiswa");
         btnSignUp.setOnAction(e -> signUp());
         btnLogin.setOnAction(e -> moveTo("login.fxml"));
+
+        hideAllErrors();
+    }
+
+    private void hideAllErrors() {
+        lblNamaError.setVisible(false);
+        lblEmailError.setVisible(false);
+        lblPasswordError.setVisible(false);
+        lblConfirmPasswordError.setVisible(false);
+        lblRoleError.setVisible(false);
     }
 
     private void signUp() {
-        String nama = txtNama.getText();
-        String email = txtEmail.getText();
-        String password = txtPassword.getText();
-        String confirmPassword = txtConfirmPassword.getText();
+        String nama = txtNama.getText().trim();
+        String email = txtEmail.getText().trim();
+        String password = txtPassword.getText().trim();
+        String confirmPassword = txtConfirmPassword.getText().trim();
         String role = cmbRole.getValue();
 
-        if (nama.isEmpty() || email.isEmpty() || password.isEmpty()
-                || confirmPassword.isEmpty() || role == null) {
-            showAlert("Sign Up Failed", "Semua field wajib diisi.");
-            return;
+        boolean valid = true;
+
+        // ===== VALIDASI NAMA =====
+        if (nama.isEmpty()) {
+            setError(lblNamaError, "Nama wajib diisi.");
+            valid = false;
+        } else {
+            lblNamaError.setVisible(false);
         }
 
-        if (!password.equals(confirmPassword)) {
-            showAlert("Sign Up Failed", "Password tidak sama.");
-            return;
+        // ===== VALIDASI EMAIL =====
+        if (email.isEmpty()) {
+            setError(lblEmailError, "Email wajib diisi.");
+            valid = false;
+        } else if (!EMAIL_PATTERN.matcher(email).matches()) {
+            setError(lblEmailError, "Format email tidak valid (contoh: nama@domain.com).");
+            valid = false;
+        } else {
+            lblEmailError.setVisible(false);
         }
+
+        // ===== VALIDASI PASSWORD =====
+        if (password.isEmpty()) {
+            setError(lblPasswordError, "Password wajib diisi.");
+            valid = false;
+        } else if (password.length() < 8) {
+            setError(lblPasswordError, "Password minimal 8 karakter.");
+            valid = false;
+        } else {
+            lblPasswordError.setVisible(false);
+        }
+
+        // ===== VALIDASI KONFIRMASI PASSWORD =====
+        if (confirmPassword.isEmpty()) {
+            setError(lblConfirmPasswordError, "Konfirmasi password wajib diisi.");
+            valid = false;
+        } else if (!password.equals(confirmPassword)) {
+            setError(lblConfirmPasswordError, "Password tidak sama.");
+            valid = false;
+        } else {
+            lblConfirmPasswordError.setVisible(false);
+        }
+
+        // ===== VALIDASI ROLE =====
+        if (role == null) {
+            setError(lblRoleError, "Role wajib dipilih.");
+            valid = false;
+        } else {
+            lblRoleError.setVisible(false);
+        }
+
+        if (!valid) return;
 
         String sql = "INSERT INTO users(nama, email, password, role) VALUES (?, ?, ?, ?)";
 
@@ -57,13 +122,19 @@ public class SignUpController {
 
             ps.executeUpdate();
 
-            showAlert("Success", "Akun berhasil dibuat.");
+            showInfo("Success", "Akun berhasil dibuat.");
             moveTo("login.fxml");
 
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Database Error", "Gagal menyimpan user.");
+            showInfo("Database Error", "Gagal menyimpan user.");
         }
+    }
+
+    /** Set teks error ke label tertentu lalu tampilkan. */
+    private void setError(Label label, String message) {
+        label.setText(message);
+        label.setVisible(true);
     }
 
     private void moveTo(String fxml) {
@@ -85,7 +156,8 @@ public class SignUpController {
         }
     }
 
-    private void showAlert(String title, String message) {
+    /** Tetap dipakai untuk hal yang memang butuh popup, misalnya sukses & error database. */
+    private void showInfo(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
