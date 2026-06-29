@@ -1,4 +1,4 @@
-package com.example.loginapp;
+package com.example.loginapp.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ public class DatabaseConnection {
 
     private static final String DATABASE_NAME = "bdProjek";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "060907";
+    private static final String PASSWORD = "jen153";
     private static final String URL = "jdbc:postgresql://localhost:5432/" + DATABASE_NAME;
 
     private static Connection databaseLink;
