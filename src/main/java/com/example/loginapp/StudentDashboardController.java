@@ -19,6 +19,7 @@ public class StudentDashboardController {
     @FXML private Button btnNavTugas;
     @FXML private Button btnNavMateri;
     @FXML private Button btnNavPengumuman;
+    @FXML private Button btnNavPRS;
     @FXML private Label lblSidebarNama;
     @FXML private Label lblSidebarEmail;
 
@@ -27,6 +28,7 @@ public class StudentDashboardController {
     @FXML private VBox viewTugas;
     @FXML private VBox viewMateri;
     @FXML private VBox viewPengumuman;
+    @FXML private VBox viewPRS;
 
     // === DASHBOARD ===
     @FXML private Label lblWelcome;
@@ -68,6 +70,21 @@ public class StudentDashboardController {
     @FXML private TableColumn<Pengumuman, String> colPengTgl;
     private final ObservableList<Pengumuman> pengumumanList = FXCollections.observableArrayList();
 
+    // == PRS ==
+    @FXML private TableView<KelasTersedia> tabelPRS;
+    @FXML private TableColumn<KelasTersedia, String> colKode;
+    @FXML private TableColumn<KelasTersedia, String> colMatkul;
+    @FXML private TableColumn<KelasTersedia, Integer> colSks;
+    @FXML private TableColumn<KelasTersedia, String> colKelasPRS;
+    @FXML private TableColumn<KelasTersedia, String> colDosen;
+    @FXML private TableColumn<KelasTersedia, Integer> colKuota;
+    @FXML private TableColumn<KelasTersedia, CheckBox> colAksi;
+    @FXML private Label lblTotalSKS;
+
+    private final ObservableList<KelasTersedia> prsList = FXCollections.observableArrayList();
+    private int totalSksDipilih = 0;
+    private final int MAX_SKS = 24;
+
     // tugas id map for submission
     private final java.util.Map<String, Integer> tugasIdMap = new java.util.LinkedHashMap<>();
 
@@ -81,6 +98,7 @@ public class StudentDashboardController {
         setupMateriTable();
         setupPengumumanTable();
         setupDashboardTable();
+        setupPRSTable();
 
         showView("dashboard");
         loadDashboard();
@@ -92,6 +110,7 @@ public class StudentDashboardController {
     @FXML private void handleNavTugas()     { showView("tugas"); loadTugas(); setActive(btnNavTugas); }
     @FXML private void handleNavMateri()    { showView("materi"); loadMateri(); setActive(btnNavMateri); }
     @FXML private void handleNavPengumuman(){ showView("pengumuman"); loadPengumuman(); setActive(btnNavPengumuman); }
+    @FXML private void handleNavPRS() { showView("prs"); loadPRS(); setActive(btnNavPRS); }
 
     @FXML private void handleLogout() {
         Session.clearSession();
@@ -106,13 +125,14 @@ public class StudentDashboardController {
             case "tugas"       -> viewTugas.setVisible(true);
             case "materi"      -> viewMateri.setVisible(true);
             case "pengumuman"  -> viewPengumuman.setVisible(true);
+            case "prs"         -> viewPRS.setVisible(true);
         }
     }
 
     private void setActive(Button b) {
         String off = "-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;";
         String on  = "-fx-background-color:linear-gradient(to right,#4F46E5,#2563EB); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
-        for (Button btn : new Button[]{btnNavDashboard, btnNavTugas, btnNavMateri, btnNavPengumuman})
+        for (Button btn : new Button[]{btnNavDashboard, btnNavTugas, btnNavMateri, btnNavPengumuman, btnNavPRS})
             btn.setStyle(off);
         b.setStyle(on);
     }
@@ -151,6 +171,16 @@ public class StudentDashboardController {
         colPengKelas.setCellValueFactory(new PropertyValueFactory<>("kelas"));
         colPengTgl.setCellValueFactory(new PropertyValueFactory<>("tanggal"));
         tblPengumuman.setItems(pengumumanList);
+    }
+
+    private void setupPRSTable() {
+        colKode.setCellValueFactory(new PropertyValueFactory<>("kode"));
+        colMatkul.setCellValueFactory(new PropertyValueFactory<>("mataKuliah"));
+        colSks.setCellValueFactory(new PropertyValueFactory<>("sks"));
+        colKelasPRS.setCellValueFactory(new PropertyValueFactory<>("kelas"));
+        colDosen.setCellValueFactory(new PropertyValueFactory<>("dosen"));
+        colKuota.setCellValueFactory(new PropertyValueFactory<>("sisaKuota"));
+        colAksi.setCellValueFactory(new PropertyValueFactory<>("pilihBox"));
     }
 
     // ===================== LOAD DATA =====================
@@ -197,18 +227,23 @@ public class StudentDashboardController {
         assignmentList.clear();
         tugasIdMap.clear();
         int userId = Session.getUserId();
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(
-                    "SELECT a.id, a.judul, k.nama AS kelas, a.deadline, " +
-                            "CASE WHEN s.id IS NOT NULL THEN 'Sudah Kumpul' ELSE 'Belum Kumpul' END AS status, " +
-                            "COALESCE(s.nilai, '-') AS nilai " +
-                            "FROM assignment a " +
-                            "LEFT JOIN kelas k ON a.kelas_id = k.id " +
-                            "LEFT JOIN submission s ON s.assignment_id = a.id AND s.user_id = ? " +
-                            "ORDER BY a.deadline");
+        String query = "SELECT a.id, a.judul, k.nama AS kelas, a.deadline, " +
+                "CASE WHEN s.id IS NOT NULL THEN 'Sudah Kumpul' ELSE 'Belum Kumpul' END AS status, " +
+                "COALESCE(CAST(s.nilai AS VARCHAR), '-') AS nilai " +
+                "FROM assignment a " +
+                "JOIN enrollment e ON a.kelas_id = e.kelas_id " +
+                "LEFT JOIN kelas k ON a.kelas_id = k.id " +
+                "LEFT JOIN submission s ON s.assignment_id = a.id AND s.user_id = ? " +
+                "WHERE e.user_id = ? AND e.status = 'approved' " +
+                "ORDER BY a.deadline";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, userId);
+            ps.setInt(2, userId);
             ResultSet rs = ps.executeQuery();
             ObservableList<String> tugasOptions = FXCollections.observableArrayList();
+
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String judul = rs.getString("judul");
@@ -224,11 +259,18 @@ public class StudentDashboardController {
 
     private void loadMateri() {
         materiList.clear();
+        int userId = Session.getUserId();
+        String query = "SELECT m.id, m.judul, k.nama AS kelas, m.isi FROM materi m " +
+                "JOIN enrollment e ON m.kelas_id = e.kelas_id " +
+                "LEFT JOIN kelas k ON m.kelas_id = k.id " +
+                "WHERE e.user_id = ? AND e.status = 'approved' " +
+                "ORDER BY m.id";
+
         try (Connection conn = DatabaseConnection.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(
-                     "SELECT m.id, m.judul, k.nama AS kelas, m.isi FROM materi m " +
-                             "LEFT JOIN kelas k ON m.kelas_id = k.id ORDER BY m.id")) {
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
             while (rs.next())
                 materiList.add(new Materi(rs.getInt("id"), rs.getString("judul"),
                         nvl(rs.getString("kelas")), nvl(rs.getString("isi"))));
@@ -237,15 +279,61 @@ public class StudentDashboardController {
 
     private void loadPengumuman() {
         pengumumanList.clear();
+        int userId = Session.getUserId();
+        String query = "SELECT p.judul, p.isi, k.nama AS kelas, p.tanggal FROM pengumuman p " +
+                "JOIN enrollment e ON p.kelas_id = e.kelas_id " +
+                "LEFT JOIN kelas k ON p.kelas_id = k.id " +
+                "WHERE e.user_id = ? AND e.status = 'approved' " +
+                "ORDER BY p.id DESC";
+
         try (Connection conn = DatabaseConnection.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(
-                     "SELECT p.judul, p.isi, k.nama AS kelas, p.tanggal FROM pengumuman p " +
-                             "LEFT JOIN kelas k ON p.kelas_id = k.id ORDER BY p.id DESC")) {
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
             while (rs.next())
                 pengumumanList.add(new Pengumuman(rs.getString("judul"),
                         nvl(rs.getString("isi")), nvl(rs.getString("kelas")), nvl(rs.getString("tanggal"))));
         } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    private void loadPRS() {
+        prsList.clear();
+        totalSksDipilih = 0;
+        updateLabelSKS();
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery("SELECT id, nama, kapasitas, semester FROM kelas")) {
+
+            while (rs.next()) {
+                String idKelas = rs.getString("id");
+                String namaMatkul = rs.getString("nama");
+                int sisaKuota = rs.getInt("kapasitas");
+                int sks = 3; // Default SKS
+                String namaDosen = "-"; // Default Dosen
+                String kelas = "SMT " + rs.getInt("semester");
+
+                KelasTersedia kelasItem = new KelasTersedia(idKelas, namaMatkul, sks, kelas, namaDosen, sisaKuota);
+
+                kelasItem.getPilihBox().setOnAction(e -> {
+                    if (kelasItem.getPilihBox().isSelected()) {
+                        if (totalSksDipilih + kelasItem.getSks() > MAX_SKS) {
+                            showAlert("Batas SKS Melebihi", "Kamu tidak bisa mengambil lebih dari 24 SKS!");
+                            kelasItem.getPilihBox().setSelected(false);
+                        } else {
+                            totalSksDipilih += kelasItem.getSks();
+                        }
+                    } else {
+                        totalSksDipilih -= kelasItem.getSks();
+                    }
+                    updateLabelSKS();
+                });
+
+                prsList.add(kelasItem);
+            }
+            tabelPRS.setItems(prsList);
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
     // ===================== HANDLERS =====================
@@ -298,6 +386,53 @@ public class StudentDashboardController {
         tblStudentAssignment.setItems(f);
     }
 
+    @FXML
+    private void handleResetPRS() {
+        for (KelasTersedia kelas : prsList) {
+            kelas.getPilihBox().setSelected(false);
+        }
+        totalSksDipilih = 0;
+        updateLabelSKS();
+    }
+
+    @FXML
+    private void handleSimpanPRS() {
+        if (totalSksDipilih == 0) {
+            showAlert("Peringatan", "Pilih minimal 1 mata kuliah terlebih dahulu."); return;
+        }
+
+        int userId = Session.getUserId();
+        // Sesuaikan dengan nama tabel relasi enrollment di database kamu
+        String query = "INSERT INTO enrollment (user_id, kelas_id, status) VALUES (?, ?, 'pending')";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            int count = 0;
+            for (KelasTersedia k : prsList) {
+                if (k.getPilihBox().isSelected()) {
+                    ps.setInt(1, userId);
+                    ps.setString(2, k.getKode());
+                    ps.addBatch();
+                    count++;
+                }
+            }
+            ps.executeBatch();
+            showInfo("Sukses", count + " kelas berhasil disimpan ke Rencana Studi!");
+            handleResetPRS();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Gagal", "Error database: " + e.getMessage());
+        }
+    }
+
+    private void updateLabelSKS() {
+        if (lblTotalSKS != null) {
+            lblTotalSKS.setText("Total SKS Dipilih: " + totalSksDipilih + " / " + MAX_SKS);
+        }
+    }
+
     // ===================== UTILS =====================
 
     private String nvl(String s) { return s != null ? s : "-"; }
@@ -344,5 +479,29 @@ public class StudentDashboardController {
         }
         public String getJudul() { return judul; } public String getIsi() { return isi; }
         public String getKelas() { return kelas; } public String getTanggal() { return tanggal; }
+    }
+
+    public static class KelasTersedia {
+        private String kode, mataKuliah, kelas, dosen;
+        private int sks, sisaKuota;
+        private CheckBox pilihBox;
+
+        public KelasTersedia(String kode, String mataKuliah, int sks, String kelas, String dosen, int sisaKuota) {
+            this.kode = kode;
+            this.mataKuliah = mataKuliah;
+            this.sks = sks;
+            this.kelas = kelas;
+            this.dosen = dosen;
+            this.sisaKuota = sisaKuota;
+            this.pilihBox = new CheckBox();
+        }
+
+        public String getKode() { return kode; }
+        public String getMataKuliah() { return mataKuliah; }
+        public int getSks() { return sks; }
+        public String getKelas() { return kelas; }
+        public String getDosen() { return dosen; }
+        public int getSisaKuota() { return sisaKuota; }
+        public CheckBox getPilihBox() { return pilihBox; }
     }
 }
