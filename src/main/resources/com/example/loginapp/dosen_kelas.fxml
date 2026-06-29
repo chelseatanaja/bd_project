@@ -1,14 +1,331 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
 
-</AnchorPane>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.loginapp.controller.DosenKelasController"
+            prefWidth="1280" prefHeight="760"
+            style="-fx-background-color: #F1F5F9;">
+
+
+    <!-- ========== SIDEBAR ========== -->
+    <left>
+        <VBox prefWidth="240" spacing="6"
+              style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
+            <padding><Insets top="28" right="14" bottom="28" left="14"/></padding>
+
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ImageView fitHeight="64" fitWidth="64" preserveRatio="true">
+                    <image><Image url ="@CHARM_SCHOOL.png"/></image>
+                </ImageView>
+                <VBox spacing="1">
+                    <Label text="LMS Dosen" textFill="WHITE">
+                        <font><Font name="System Bold" size="18"/></font>
+                    </Label>
+                    <Label text="Pengajar" textFill="#94A3B8" style="-fx-font-size:11;"/>
+                </VBox>
+            </HBox>
+
+
+            <Separator opacity="0.2"/>
+
+
+            <!-- Back to Dashboard -->
+            <Button text="← Kembali ke Dashboard"
+                    maxWidth="Infinity" prefHeight="46"
+                    style="-fx-background-color:rgba(255,255,255,0.08); -fx-text-fill:#CBD5E1;
+                          -fx-font-size:13; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
+                    onAction="#handleBackToDashboard"/>
+
+
+            <Separator opacity="0.2"/>
+
+
+            <!-- Kelas Info -->
+            <VBox spacing="4" style="-fx-padding:8 4;">
+                <Label text="KELAS AKTIF" textFill="#64748B" style="-fx-font-size:10; -fx-font-weight:bold;"/>
+                <Label fx:id="lblNamaKelas" text="-" textFill="WHITE" style="-fx-font-size:15; -fx-font-weight:bold;" wrapText="true"/>
+                <Label fx:id="lblIdKelas" text="" textFill="#64748B" style="-fx-font-size:11;"/>
+            </VBox>
+
+
+            <Separator opacity="0.2"/>
+
+
+            <!-- Nav per kelas -->
+            <Button fx:id="btnNavMateri" text="📚   Materi"
+                    maxWidth="Infinity" prefHeight="46"
+                    style="-fx-background-color:linear-gradient(to right,#4F46E5,#2563EB);
+                          -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold;
+                          -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;"
+                    onAction="#handleNavMateri"/>
+
+
+            <Button fx:id="btnNavTugas" text="📋   Tugas"
+                    maxWidth="Infinity" prefHeight="46"
+                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
+                          -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
+                    onAction="#handleNavTugas"/>
+
+
+            <Button fx:id="btnNavSubmission" text="📥   Submission"
+                    maxWidth="Infinity" prefHeight="46"
+                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
+                          -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
+                    onAction="#handleNavSubmission"/>
+
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+
+            <VBox spacing="6" style="-fx-background-color:rgba(255,255,255,0.07); -fx-background-radius:12; -fx-padding:14;">
+                <Label fx:id="lblSidebarNama" text="Dosen" textFill="WHITE" style="-fx-font-weight:bold;"/>
+                <Label fx:id="lblSidebarEmail" text="" textFill="#94A3B8" style="-fx-font-size:11;"/>
+                <Button text="Logout" maxWidth="Infinity" prefHeight="36"
+                        style="-fx-background-color:#EF4444; -fx-text-fill:white;
+                              -fx-background-radius:8; -fx-font-size:13; -fx-cursor:hand;"
+                        onAction="#handleLogout"/>
+            </VBox>
+        </VBox>
+    </left>
+
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <center>
+        <StackPane>
+
+
+            <!-- ===== MATERI VIEW ===== -->
+            <VBox fx:id="viewMateri" spacing="20" visible="true">
+                <padding><Insets top="32" right="36" bottom="32" left="36"/></padding>
+
+
+                <!-- Header -->
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label fx:id="lblHeaderKelas" text="Materi Kelas" textFill="#0F172A">
+                            <font><Font name="System Bold" size="26"/></font>
+                        </Label>
+                        <Label text="Kelola materi pembelajaran untuk kelas ini" textFill="#64748B" style="-fx-font-size:13;"/>
+                    </VBox>
+                    <Button text="＋  Tambah Materi" prefHeight="42"
+                            style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:10;
+                                  -fx-font-weight:bold; -fx-font-size:13; -fx-cursor:hand; -fx-padding:0 20;"
+                            onAction="#handleShowFormMateri"/>
+                </HBox>
+
+
+                <!-- Form Panel (hidden by default, shown on button click) -->
+                <VBox fx:id="panelFormMateri" spacing="14" visible="false" managed="false"
+                      style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:24;
+                            -fx-effect:dropshadow(gaussian,rgba(0,0,0,0.08),10,0,0,3);">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label fx:id="lblFormTitle" text="Tambah Materi Baru" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:16;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="✕" style="-fx-background-color:transparent; -fx-text-fill:#94A3B8; -fx-font-size:16; -fx-cursor:hand;"
+                                onAction="#handleHideFormMateri"/>
+                    </HBox>
+                    <GridPane hgap="16" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints prefWidth="120" minWidth="120"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+                        <Label text="Judul *" textFill="#334155" style="-fx-font-weight:bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtMateriJudul" promptText="Judul materi" prefHeight="40"
+                                   style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <Label text="Isi / URL" textFill="#334155" style="-fx-font-weight:bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtMateriIsi" promptText="Link file, URL, atau deskripsi singkat" prefHeight="40"
+                                   style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    </GridPane>
+                    <HBox spacing="10">
+                        <Button fx:id="btnSimpanMateri" text="Simpan" prefHeight="40"
+                                style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8;
+                                      -fx-font-weight:bold; -fx-cursor:hand; -fx-padding:0 24;"
+                                onAction="#handleSimpanMateri"/>
+                        <Button text="Batal" prefHeight="40"
+                                style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8;
+                                      -fx-cursor:hand; -fx-padding:0 24;"
+                                onAction="#handleHideFormMateri"/>
+                    </HBox>
+                </VBox>
+
+
+                <!-- Materi List -->
+                <VBox spacing="12" VBox.vgrow="ALWAYS"
+                      style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;
+                            -fx-effect:dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label text="Daftar Materi" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:15;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblJumlahMateri" text="0 materi" textFill="#64748B" style="-fx-font-size:13;"/>
+                    </HBox>
+                    <TableView fx:id="tblMateri" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colMateriId" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="colMateriJudul" text="Judul" prefWidth="280"/>
+                            <TableColumn fx:id="colMateriIsi" text="Isi / Link" prefWidth="360"/>
+                        </columns>
+                        <placeholder>
+                            <VBox alignment="CENTER" spacing="8">
+                                <Label text="📭" style="-fx-font-size:32;"/>
+                                <Label text="Belum ada materi untuk kelas ini." textFill="#94A3B8"/>
+                                <Label text="Klik '+ Tambah Materi' untuk mulai." textFill="#CBD5E1" style="-fx-font-size:12;"/>
+                            </VBox>
+                        </placeholder>
+                    </TableView>
+                    <!-- Action row -->
+                    <HBox spacing="10">
+                        <Button text="✎  Edit Materi" prefHeight="38"
+                                style="-fx-background-color:#2563EB; -fx-text-fill:white; -fx-background-radius:8;
+                                      -fx-font-weight:bold; -fx-cursor:hand; -fx-padding:0 18;"
+                                onAction="#handleEditMateri"/>
+                        <Button text="🗑  Hapus Materi" prefHeight="38"
+                                style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8;
+                                      -fx-font-weight:bold; -fx-cursor:hand; -fx-padding:0 18;"
+                                onAction="#handleHapusMateri"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+
+            <!-- ===== TUGAS VIEW ===== -->
+            <VBox fx:id="viewTugas" spacing="20" visible="false">
+                <padding><Insets top="32" right="36" bottom="32" left="36"/></padding>
+
+
+                <!-- Header -->
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label fx:id="lblHeaderTugas" text="Tugas Kelas" textFill="#0F172A">
+                            <font><Font name="System Bold" size="26"/></font>
+                        </Label>
+                        <Label text="Kelola tugas untuk kelas ini" textFill="#64748B" style="-fx-font-size:13;"/>
+                    </VBox>
+                    <Button text="＋  Tambah Tugas" prefHeight="42"
+                            style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:10;
+                                  -fx-font-weight:bold; -fx-font-size:13; -fx-cursor:hand; -fx-padding:0 20;"
+                            onAction="#handleShowFormTugas"/>
+                </HBox>
+
+
+                <!-- Form Panel (hidden by default) -->
+                <VBox fx:id="panelFormTugas" spacing="14" visible="false" managed="false"
+                      style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:24;
+                            -fx-effect:dropshadow(gaussian,rgba(0,0,0,0.08),10,0,0,3);">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label fx:id="lblFormTugasTitle" text="Tambah Tugas Baru" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:16;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="✕" style="-fx-background-color:transparent; -fx-text-fill:#94A3B8; -fx-font-size:16; -fx-cursor:hand;"
+                                onAction="#handleHideFormTugas"/>
+                    </HBox>
+                    <GridPane hgap="16" vgap="12">
+                        <columnConstraints>
+                            <ColumnConstraints prefWidth="120" minWidth="120"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+                        <Label text="Judul *" textFill="#334155" style="-fx-font-weight:bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtTugasJudul" promptText="Judul tugas" prefHeight="40"
+                                   style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <Label text="Deadline" textFill="#334155" style="-fx-font-weight:bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <DatePicker fx:id="dpTugasDeadline" promptText="Pilih deadline" maxWidth="Infinity" prefHeight="40"
+                                    GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    </GridPane>
+                    <HBox spacing="10">
+                        <Button fx:id="btnSimpanTugas" text="Simpan" prefHeight="40"
+                                style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8;
+                                      -fx-font-weight:bold; -fx-cursor:hand; -fx-padding:0 24;"
+                                onAction="#handleSimpanTugas"/>
+                        <Button text="Batal" prefHeight="40"
+                                style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8;
+                                      -fx-cursor:hand; -fx-padding:0 24;"
+                                onAction="#handleHideFormTugas"/>
+                    </HBox>
+                </VBox>
+
+
+                <!-- Tugas List -->
+                <VBox spacing="12" VBox.vgrow="ALWAYS"
+                      style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;
+                            -fx-effect:dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label text="Daftar Tugas" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:15;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblJumlahTugas" text="0 tugas" textFill="#64748B" style="-fx-font-size:13;"/>
+                    </HBox>
+                    <TableView fx:id="tblTugas" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colTugasId" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="colTugasJudul" text="Judul" prefWidth="300"/>
+                            <TableColumn fx:id="colTugasDeadline" text="Deadline" prefWidth="200"/>
+                        </columns>
+                        <placeholder>
+                            <VBox alignment="CENTER" spacing="8">
+                                <Label text="📭" style="-fx-font-size:32;"/>
+                                <Label text="Belum ada tugas untuk kelas ini." textFill="#94A3B8"/>
+                                <Label text="Klik '+ Tambah Tugas' untuk mulai." textFill="#CBD5E1" style="-fx-font-size:12;"/>
+                            </VBox>
+                        </placeholder>
+                    </TableView>
+                    <!-- Action row -->
+                    <HBox spacing="10">
+                        <Button text="✎  Edit Tugas" prefHeight="38"
+                                style="-fx-background-color:#2563EB; -fx-text-fill:white; -fx-background-radius:8;
+                                      -fx-font-weight:bold; -fx-cursor:hand; -fx-padding:0 18;"
+                                onAction="#handleEditTugas"/>
+                        <Button text="🗑  Hapus Tugas" prefHeight="38"
+                                style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8;
+                                      -fx-font-weight:bold; -fx-cursor:hand; -fx-padding:0 18;"
+                                onAction="#handleHapusTugas"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+
+            <!-- ===== SUBMISSION VIEW ===== -->
+            <VBox fx:id="viewSubmission" spacing="16" visible="false">
+                <padding><Insets top="32" right="36" bottom="32" left="36"/></padding>
+                <HBox alignment="CENTER_LEFT">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Submission Kelas" textFill="#0F172A">
+                            <font><Font name="System Bold" size="26"/></font>
+                        </Label>
+                        <Label text="Submission mahasiswa untuk kelas ini" textFill="#64748B" style="-fx-font-size:13;"/>
+                    </VBox>
+                    <Button text="✎  Beri Nilai" prefHeight="40"
+                            style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8;
+                                  -fx-font-weight:bold; -fx-cursor:hand; -fx-padding:0 18;"
+                            onAction="#handleBeriNilai"/>
+                </HBox>
+                <VBox spacing="12" VBox.vgrow="ALWAYS"
+                      style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                    <TableView fx:id="tblSubmission" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colSubId" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="colSubNamaMhs" text="Nama Mahasiswa" prefWidth="200"/>
+                            <TableColumn fx:id="colSubTugas" text="Tugas" prefWidth="200"/>
+                            <TableColumn fx:id="colSubTanggal" text="Tgl Kumpul" prefWidth="150"/>
+                            <TableColumn fx:id="colSubFile" text="File / Link" prefWidth="200"/>
+                            <TableColumn fx:id="colSubNilai" text="Nilai" prefWidth="80"/>
+                        </columns>
+                        <placeholder><Label text="Belum ada submission." textFill="#94A3B8"/></placeholder>
+                    </TableView>
+                </VBox>
+            </VBox>
+
+
+        </StackPane>
+    </center>
+</BorderPane>
+

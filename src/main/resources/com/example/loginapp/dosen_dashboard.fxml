@@ -1,297 +1,275 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.loginapp.controller.DosenDashboardController"
-            prefWidth="1280" prefHeight="760"
-            style="-fx-background-color: #F1F5F9;">
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane prefHeight="760" prefWidth="1280" style="-fx-background-color: #F1F5F9;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.loginapp.controller.DosenDashboardController">
+
 
     <!-- ========== SIDEBAR ========== -->
     <left>
-        <VBox prefWidth="240" spacing="6"
-              style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
-            <padding><Insets top="28" right="14" bottom="28" left="14"/></padding>
+        <VBox prefWidth="240" spacing="6" style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
+            <padding><Insets bottom="28" left="14" right="14" top="28" /></padding>
 
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="▣" textFill="#4F7CFF" style="-fx-font-size:30;"/>
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitHeight="64" fitWidth="64" preserveRatio="true">
+                    <image><Image url ="@CHARM_SCHOOL.png"/></image>
+                </ImageView>
                 <VBox spacing="1">
                     <Label text="LMS Dosen" textFill="WHITE">
-                        <font><Font name="System Bold" size="18"/></font>
+                        <font><Font name="System Bold" size="18" /></font>
                     </Label>
-                    <Label text="Pengajar" textFill="#94A3B8" style="-fx-font-size:11;"/>
+                    <Label style="-fx-font-size:11;" text="Pengajar" textFill="#94A3B8" />
                 </VBox>
             </HBox>
 
-            <Separator opacity="0.2"/>
 
-            <Button fx:id="btnNavDashboard" text="🏠   Dashboard"
-                    maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:linear-gradient(to right,#4F46E5,#2563EB);
-                           -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold;
-                           -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;"
-                    onAction="#handleNavDashboard"/>
+            <Separator opacity="0.2" />
 
-            <Button fx:id="btnNavTugas" text="📋   Manage Tugas"
-                    maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
-                           -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
-                    onAction="#handleNavTugas"/>
 
-            <Button fx:id="btnNavMateri" text="📚   Manage Materi"
-                    maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
-                           -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
-                    onAction="#handleNavMateri"/>
+            <Button fx:id="btnNavDashboard" maxWidth="Infinity" onAction="#handleNavDashboard" prefHeight="46" style="-fx-background-color:linear-gradient(to right,#4F46E5,#2563EB);                            -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold;                            -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;" text="🏠   Dashboard" />
 
-            <Button fx:id="btnNavSubmission" text="📥   Submission Masuk"
-                    maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
-                           -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
-                    onAction="#handleNavSubmission"/>
 
-            <Button fx:id="btnNavPengumuman" text="📢   Pengumuman"
-                    maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
-                           -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
-                    onAction="#handleNavPengumuman"/>
+            <Button fx:id="btnNavTugas" maxWidth="Infinity" onAction="#handleNavTugas" prefHeight="46" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;                            -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;" text="📋   Manage Tugas" />
 
-            <Region VBox.vgrow="ALWAYS"/>
+
+            <Button fx:id="btnNavMateri" maxWidth="Infinity" onAction="#handleNavMateri" prefHeight="46" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;                            -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;" text="📚   Manage Materi" />
+
+
+            <Button fx:id="btnNavSubmission" maxWidth="Infinity" onAction="#handleNavSubmission" prefHeight="46" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;                            -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;" text="📥   Submission Masuk" />
+
+
+            <Button fx:id="btnNavPengumuman" maxWidth="Infinity" onAction="#handleNavPengumuman" prefHeight="46" style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;                            -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;" text="📢   Pengumuman" />
+
+
+            <Region VBox.vgrow="ALWAYS" />
+
 
             <VBox spacing="6" style="-fx-background-color:rgba(255,255,255,0.07); -fx-background-radius:12; -fx-padding:14;">
-                <Label fx:id="lblSidebarNama" text="Dosen" textFill="WHITE" style="-fx-font-weight:bold;"/>
-                <Label fx:id="lblSidebarEmail" text="" textFill="#94A3B8" style="-fx-font-size:11;"/>
-                <Button text="Logout" maxWidth="Infinity" prefHeight="36"
-                        style="-fx-background-color:#EF4444; -fx-text-fill:white;
-                               -fx-background-radius:8; -fx-font-size:13; -fx-cursor:hand;"
-                        onAction="#handleLogout"/>
+                <Label fx:id="lblSidebarNama" style="-fx-font-weight:bold;" text="Dosen" textFill="WHITE" />
+                <Label fx:id="lblSidebarEmail" style="-fx-font-size:11;" text="" textFill="#94A3B8" />
+                <Button maxWidth="Infinity" onAction="#handleLogout" prefHeight="36" style="-fx-background-color:#EF4444; -fx-text-fill:white;                                -fx-background-radius:8; -fx-font-size:13; -fx-cursor:hand;" text="Logout" />
             </VBox>
         </VBox>
     </left>
+
 
     <!-- ========== MAIN CONTENT ========== -->
     <center>
         <StackPane>
 
-            <!-- DASHBOARD VIEW -->
-            <VBox fx:id="viewDashboard" spacing="22" visible="true">
-                <padding><Insets top="30" right="32" bottom="30" left="32"/></padding>
-                <VBox spacing="4">
-                    <Label text="Dashboard Dosen" textFill="#0F172A">
-                        <font><Font name="System Bold" size="28"/></font>
-                    </Label>
-                    <Label text="Selamat datang!" textFill="#64748B"/>
-                </VBox>
-                <HBox spacing="18">
-                    <VBox prefWidth="190" spacing="10" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:18;">
-                        <Label text="Total Tugas" textFill="#64748B" style="-fx-font-size:13;"/>
-                        <Label fx:id="lblTotalAssignment" text="0" textFill="#0F172A">
-                            <font><Font name="System Bold" size="30"/></font>
-                        </Label>
+
+            <!-- ===== DASHBOARD VIEW (My Courses) ===== -->
+            <VBox fx:id="viewDashboard" spacing="0" visible="true">
+                <ScrollPane fitToWidth="true" style="-fx-background-color:transparent; -fx-background:transparent;" VBox.vgrow="ALWAYS">
+                    <VBox spacing="28">
+                        <padding><Insets bottom="32" left="36" right="36" top="32" /></padding>
+
+
+                        <!-- Header -->
+                        <VBox spacing="4">
+                            <Label text="My Courses" textFill="#100000">
+                                <font><Font name="System Bold" size="28" /></font>
+                            </Label>
+                            <Label style="-fx-font-size:14;" text="Kelas yang Anda ampu" textFill="#64748B" />
+                        </VBox>
+
+
+                        <!-- Stats row -->
+                        <HBox spacing="16">
+                            <VBox prefWidth="180" spacing="8" style="-fx-background-color:white; -fx-background-radius:14; -fx-padding:18; -fx-effect:dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                                <Label style="-fx-font-size:12;" text="Total Kelas" textFill="#64748B" />
+                                <Label fx:id="lblTotalAssignment" text="0" textFill="#4F46E5">
+                                    <font><Font name="System Bold" size="28" /></font>
+                                </Label>
+                            </VBox>
+                            <VBox prefWidth="180" spacing="8" style="-fx-background-color:white; -fx-background-radius:14; -fx-padding:18; -fx-effect:dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                                <Label style="-fx-font-size:12;" text="Total Materi" textFill="#64748B" />
+                                <Label fx:id="lblTotalMateri" text="0" textFill="#4F46E5">
+                                    <font><Font name="System Bold" size="28" /></font>
+                                </Label>
+                            </VBox>
+                            <VBox prefWidth="180" spacing="8" style="-fx-background-color:white; -fx-background-radius:14; -fx-padding:18; -fx-effect:dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                                <Label style="-fx-font-size:12;" text="Submission Masuk" textFill="#64748B" />
+                                <Label fx:id="lblTotalSubmission" text="0" textFill="#4F46E5">
+                                    <font><Font name="System Bold" size="28" /></font>
+                                </Label>
+                            </VBox>
+                            <VBox prefWidth="180" spacing="8" style="-fx-background-color:white; -fx-background-radius:14; -fx-padding:18; -fx-effect:dropshadow(gaussian,rgba(0,0,0,0.06),8,0,0,2);">
+                                <Label style="-fx-font-size:12;" text="Pengumuman" textFill="#64748B" />
+                                <Label fx:id="lblTotalPengumuman" text="0" textFill="#4F46E5">
+                                    <font><Font name="System Bold" size="28" /></font>
+                                </Label>
+                            </VBox>
+                        </HBox>
+
+
+                        <!-- Course Cards Section -->
+                        <VBox spacing="16">
+                            <Label text="Kelas Saya" textFill="#0F172A">
+                                <font><Font name="System Bold" size="18" /></font>
+                            </Label>
+                            <!-- Card grid: 3 columns using FlowPane -->
+                            <FlowPane fx:id="flowKelas" hgap="20" prefWrapLength="800" vgap="20" />
+                        </VBox>
+
+
                     </VBox>
-                    <VBox prefWidth="190" spacing="10" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:18;">
-                        <Label text="Total Materi" textFill="#64748B" style="-fx-font-size:13;"/>
-                        <Label fx:id="lblTotalMateri" text="0" textFill="#0F172A">
-                            <font><Font name="System Bold" size="30"/></font>
-                        </Label>
-                    </VBox>
-                    <VBox prefWidth="190" spacing="10" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:18;">
-                        <Label text="Submission Masuk" textFill="#64748B" style="-fx-font-size:13;"/>
-                        <Label fx:id="lblTotalSubmission" text="0" textFill="#0F172A">
-                            <font><Font name="System Bold" size="30"/></font>
-                        </Label>
-                    </VBox>
-                    <VBox prefWidth="190" spacing="10" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:18;">
-                        <Label text="Pengumuman" textFill="#64748B" style="-fx-font-size:13;"/>
-                        <Label fx:id="lblTotalPengumuman" text="0" textFill="#0F172A">
-                            <font><Font name="System Bold" size="30"/></font>
-                        </Label>
-                    </VBox>
-                </HBox>
-                <!-- Recent assignments table -->
-                <VBox spacing="12" VBox.vgrow="ALWAYS" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
-                    <Label text="Tugas Terbaru" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:16;"/>
-                    <TableView fx:id="tblDashboard" VBox.vgrow="ALWAYS">
-                        <columns>
-                            <TableColumn fx:id="colDashId" text="ID" prefWidth="60"/>
-                            <TableColumn fx:id="colDashJudul" text="Judul Tugas" prefWidth="280"/>
-                            <TableColumn fx:id="colDashKelas" text="Kelas" prefWidth="180"/>
-                            <TableColumn fx:id="colDashDeadline" text="Deadline" prefWidth="160"/>
-                        </columns>
-                        <placeholder><Label text="Belum ada tugas." textFill="#94A3B8"/></placeholder>
-                    </TableView>
-                </VBox>
+                </ScrollPane>
             </VBox>
 
-            <!-- TUGAS VIEW -->
+
+            <!-- ===== TUGAS VIEW ===== -->
             <VBox fx:id="viewTugas" spacing="16" visible="false">
-                <padding><Insets top="30" right="32" bottom="30" left="32"/></padding>
+                <padding><Insets bottom="30" left="32" right="32" top="30" /></padding>
                 <Label text="Manage Tugas" textFill="#0F172A">
-                    <font><Font name="System Bold" size="26"/></font>
+                    <font><Font name="System Bold" size="26" /></font>
                 </Label>
                 <HBox spacing="18" VBox.vgrow="ALWAYS">
-                    <!-- Form -->
-                    <VBox spacing="12" prefWidth="290"
-                          style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
-                        <Label text="Form Tugas" textFill="#334155" style="-fx-font-weight:bold;"/>
-                        <TextField fx:id="txtTugasJudul" promptText="Judul Tugas" prefHeight="42"
-                                   style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                        <TextArea fx:id="txtTugasDeskripsi" promptText="Deskripsi tugas..." prefHeight="80" wrapText="true"
-                                  style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:8;"/>
-                        <ComboBox fx:id="cmbTugasKelas" promptText="Pilih Kelas" maxWidth="Infinity" prefHeight="42"/>
-                        <DatePicker fx:id="dpTugasDeadline" promptText="Deadline" maxWidth="Infinity" prefHeight="42"/>
-                        <Button text="＋  Tambah Tugas" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                onAction="#handleTambahTugas"/>
-                        <Button text="✎  Update Tugas" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#2563EB; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                onAction="#handleEditTugas"/>
-                        <Button text="🗑  Hapus Tugas" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                onAction="#handleHapusTugas"/>
-                        <Button text="⊗  Clear" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-cursor:hand;"
-                                onAction="#handleClearTugas"/>
+                    <VBox prefWidth="290" spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                        <Label style="-fx-font-weight:bold;" text="Form Tugas" textFill="#334155" />
+                        <TextField fx:id="txtTugasJudul" prefHeight="42" promptText="Judul Tugas" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                        <TextArea fx:id="txtTugasDeskripsi" prefHeight="80" promptText="Deskripsi tugas..." style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:8;" wrapText="true" />
+                        <ComboBox fx:id="cmbTugasKelas" maxWidth="Infinity" prefHeight="42" promptText="Pilih Kelas" />
+                        <DatePicker fx:id="dpTugasDeadline" maxWidth="Infinity" prefHeight="42" promptText="Deadline" />
+                        <Button maxWidth="Infinity" onAction="#handleTambahTugas" prefHeight="42" style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="＋  Tambah Tugas" />
+                        <Button maxWidth="Infinity" onAction="#handleEditTugas" prefHeight="42" style="-fx-background-color:#2563EB; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="✎  Update Tugas" />
+                        <Button maxWidth="Infinity" onAction="#handleHapusTugas" prefHeight="42" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="🗑  Hapus Tugas" />
+                        <Button maxWidth="Infinity" onAction="#handleClearTugas" prefHeight="42" style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-cursor:hand;" text="⊗  Clear" />
                     </VBox>
-                    <!-- Table -->
-                    <VBox spacing="12" HBox.hgrow="ALWAYS"
-                          style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                    <VBox spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;" HBox.hgrow="ALWAYS">
                         <HBox alignment="CENTER_LEFT" spacing="12">
-                            <Label text="Daftar Tugas" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:16;"/>
-                            <Region HBox.hgrow="ALWAYS"/>
-                            <TextField fx:id="txtSearchTugas" promptText="Cari tugas..." prefWidth="200" prefHeight="38"
-                                       style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
+                            <Label style="-fx-font-weight:bold; -fx-font-size:16;" text="Daftar Tugas" textFill="#0F172A" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <TextField fx:id="txtSearchTugas" prefHeight="38" prefWidth="200" promptText="Cari tugas..." style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
                         </HBox>
                         <TableView fx:id="tblTugas" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="colTugasId" text="ID" prefWidth="60"/>
-                                <TableColumn fx:id="colTugasJudul" text="Judul" prefWidth="240"/>
-                                <TableColumn fx:id="colTugasKelas" text="Kelas" prefWidth="160"/>
-                                <TableColumn fx:id="colTugasDeadline" text="Deadline" prefWidth="140"/>
+                                <TableColumn fx:id="colTugasId" prefWidth="60" text="ID" />
+                                <TableColumn fx:id="colTugasJudul" prefWidth="240" text="Judul" />
+                                <TableColumn fx:id="colTugasKelas" prefWidth="160" text="Kelas" />
+                                <TableColumn fx:id="colTugasDeadline" prefWidth="140" text="Deadline" />
                             </columns>
-                            <placeholder><Label text="Belum ada tugas." textFill="#94A3B8"/></placeholder>
+                            <placeholder><Label text="Belum ada tugas." textFill="#94A3B8" /></placeholder>
                         </TableView>
                     </VBox>
                 </HBox>
             </VBox>
 
-            <!-- MATERI VIEW -->
+
+            <!-- ===== MATERI VIEW ===== -->
             <VBox fx:id="viewMateri" spacing="16" visible="false">
-                <padding><Insets top="30" right="32" bottom="30" left="32"/></padding>
+                <padding><Insets bottom="30" left="32" right="32" top="30" /></padding>
                 <Label text="Manage Materi" textFill="#0F172A">
-                    <font><Font name="System Bold" size="26"/></font>
+                    <font><Font name="System Bold" size="26" /></font>
                 </Label>
                 <HBox spacing="18" VBox.vgrow="ALWAYS">
-                    <VBox spacing="12" prefWidth="290"
-                          style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
-                        <Label text="Form Materi" textFill="#334155" style="-fx-font-weight:bold;"/>
-                        <TextField fx:id="txtMateriJudul" promptText="Judul Materi" prefHeight="42"
-                                   style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                        <TextArea fx:id="txtMateriIsi" promptText="Isi materi / link file..." prefHeight="100" wrapText="true"
-                                  style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:8;"/>
-                        <ComboBox fx:id="cmbMateriKelas" promptText="Pilih Kelas" maxWidth="Infinity" prefHeight="42"/>
-                        <Button text="＋  Tambah Materi" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                onAction="#handleTambahMateri"/>
-                        <Button text="🗑  Hapus Materi" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                onAction="#handleHapusMateri"/>
-                        <Button text="⊗  Clear" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-cursor:hand;"
-                                onAction="#handleClearMateri"/>
+                    <VBox prefWidth="290" spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                        <Label style="-fx-font-weight:bold;" text="Form Materi" textFill="#334155" />
+                        <TextField fx:id="txtMateriJudul" prefHeight="42" promptText="Judul Materi" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                        <TextArea fx:id="txtMateriIsi" prefHeight="100" promptText="Isi materi / link file..." style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:8;" wrapText="true" />
+                        <ComboBox fx:id="cmbMateriKelas" maxWidth="Infinity" prefHeight="42" promptText="Pilih Kelas" />
+                        <Button maxWidth="Infinity" onAction="#handleTambahMateri" prefHeight="42" style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="＋  Tambah Materi" />
+                        <Button maxWidth="Infinity" onAction="#handleHapusMateri" prefHeight="42" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="🗑  Hapus Materi" />
+                        <Button maxWidth="Infinity" onAction="#handleClearMateri" prefHeight="42" style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-cursor:hand;" text="⊗  Clear" />
                     </VBox>
-                    <VBox spacing="12" HBox.hgrow="ALWAYS"
-                          style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
-                        <Label text="Daftar Materi" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:16;"/>
+                    <VBox spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-weight:bold; -fx-font-size:16;" text="Daftar Materi" textFill="#0F172A" />
                         <TableView fx:id="tblMateri" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="colMateriId" text="ID" prefWidth="60"/>
-                                <TableColumn fx:id="colMateriJudul" text="Judul" prefWidth="220"/>
-                                <TableColumn fx:id="colMateriKelas" text="Kelas" prefWidth="160"/>
-                                <TableColumn fx:id="colMateriIsi" text="Isi / Link" prefWidth="240"/>
+                                <TableColumn fx:id="colMateriId" prefWidth="60" text="ID" />
+                                <TableColumn fx:id="colMateriJudul" prefWidth="220" text="Judul" />
+                                <TableColumn fx:id="colMateriKelas" prefWidth="160" text="Kelas" />
+                                <TableColumn fx:id="colMateriIsi" prefWidth="240" text="Isi / Link" />
                             </columns>
-                            <placeholder><Label text="Belum ada materi." textFill="#94A3B8"/></placeholder>
+                            <placeholder><Label text="Belum ada materi." textFill="#94A3B8" /></placeholder>
                         </TableView>
                     </VBox>
                 </HBox>
             </VBox>
 
-            <!-- SUBMISSION VIEW -->
+
+            <!-- ===== SUBMISSION VIEW ===== -->
             <VBox fx:id="viewSubmission" spacing="16" visible="false">
-                <padding><Insets top="30" right="32" bottom="30" left="32"/></padding>
+                <padding><Insets bottom="30" left="32" right="32" top="30" /></padding>
                 <Label text="Submission Masuk" textFill="#0F172A">
-                    <font><Font name="System Bold" size="26"/></font>
+                    <font><Font name="System Bold" size="26" /></font>
                 </Label>
-                <HBox spacing="12" alignment="CENTER_LEFT">
-                    <TextField fx:id="txtSearchSubmission" promptText="Cari submission..." prefWidth="240" prefHeight="40"
-                               style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <Button text="✎  Beri Nilai" prefHeight="40"
-                            style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                            onAction="#handleBeriNilai"/>
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <TextField fx:id="txtSearchSubmission" prefHeight="40" prefWidth="240" promptText="Cari submission..." style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button onAction="#handleBeriNilai" prefHeight="40" style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="✎  Beri Nilai" />
                 </HBox>
-                <TableView fx:id="tblSubmission" VBox.vgrow="ALWAYS"
-                           style="-fx-background-color:white; -fx-background-radius:16;">
+                <TableView fx:id="tblSubmission" style="-fx-background-color:white; -fx-background-radius:16;" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colSubId" text="ID" prefWidth="60"/>
-                        <TableColumn fx:id="colSubNamaMhs" text="Nama Mahasiswa" prefWidth="200"/>
-                        <TableColumn fx:id="colSubTugas" text="Tugas" prefWidth="200"/>
-                        <TableColumn fx:id="colSubKelas" text="Kelas" prefWidth="150"/>
-                        <TableColumn fx:id="colSubTanggal" text="Tgl Kumpul" prefWidth="140"/>
-                        <TableColumn fx:id="colSubFile" text="File" prefWidth="180"/>
-                        <TableColumn fx:id="colSubNilai" text="Nilai" prefWidth="80"/>
+                        <TableColumn fx:id="colSubId" prefWidth="60" text="ID" />
+                        <TableColumn fx:id="colSubNamaMhs" prefWidth="200" text="Nama Mahasiswa" />
+                        <TableColumn fx:id="colSubTugas" prefWidth="200" text="Tugas" />
+                        <TableColumn fx:id="colSubKelas" prefWidth="150" text="Kelas" />
+                        <TableColumn fx:id="colSubTanggal" prefWidth="140" text="Tgl Kumpul" />
+                        <TableColumn fx:id="colSubFile" prefWidth="180" text="File" />
+                        <TableColumn fx:id="colSubNilai" prefWidth="80" text="Nilai" />
                     </columns>
-                    <placeholder><Label text="Belum ada submission." textFill="#94A3B8"/></placeholder>
+                    <placeholder><Label text="Belum ada submission." textFill="#94A3B8" /></placeholder>
                 </TableView>
             </VBox>
 
-            <!-- PENGUMUMAN VIEW -->
+
+            <!-- ===== PENGUMUMAN VIEW ===== -->
             <VBox fx:id="viewPengumuman" spacing="16" visible="false">
-                <padding><Insets top="30" right="32" bottom="30" left="32"/></padding>
+                <padding><Insets bottom="30" left="32" right="32" top="30" /></padding>
                 <Label text="Pengumuman" textFill="#0F172A">
-                    <font><Font name="System Bold" size="26"/></font>
+                    <font><Font name="System Bold" size="26" /></font>
                 </Label>
                 <HBox spacing="18" VBox.vgrow="ALWAYS">
-                    <VBox spacing="12" prefWidth="310"
-                          style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
-                        <Label text="Buat Pengumuman" textFill="#334155" style="-fx-font-weight:bold;"/>
-                        <TextField fx:id="txtPengumumanJudul" promptText="Judul pengumuman" prefHeight="42"
-                                   style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;"/>
-                        <TextArea fx:id="txtPengumumanIsi" promptText="Isi pengumuman (misal: Ulangan Tengah Semester pada Senin 7 Juli 2026, jam 08.00, di Gedung A Ruang 301)"
-                                  prefHeight="140" wrapText="true"
-                                  style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:8;"/>
-                        <ComboBox fx:id="cmbPengumumanKelas" promptText="Target Kelas (opsional)" maxWidth="Infinity" prefHeight="42"/>
-                        <Button text="📢  Kirim Pengumuman" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                onAction="#handleKirimPengumuman"/>
-                        <Button text="🗑  Hapus" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;"
-                                onAction="#handleHapusPengumuman"/>
-                        <Button text="⊗  Clear" maxWidth="Infinity" prefHeight="42"
-                                style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-cursor:hand;"
-                                onAction="#handleClearPengumuman"/>
+                    <VBox prefWidth="310" spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
+                        <Label style="-fx-font-weight:bold;" text="Buat Pengumuman" textFill="#334155" />
+                        <TextField fx:id="txtPengumumanJudul" prefHeight="42" promptText="Judul pengumuman" style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:0 12;" />
+                        <TextArea fx:id="txtPengumumanIsi" prefHeight="140" promptText="Isi pengumuman..." style="-fx-background-radius:8; -fx-border-color:#E2E8F0; -fx-border-radius:8; -fx-padding:8;" wrapText="true" />
+                        <ComboBox fx:id="cmbPengumumanKelas" maxWidth="Infinity" prefHeight="42" promptText="Target Kelas (opsional)" />
+                        <Button maxWidth="Infinity" onAction="#handleKirimPengumuman" prefHeight="42" style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="📢  Kirim Pengumuman" />
+                        <Button maxWidth="Infinity" onAction="#handleHapusPengumuman" prefHeight="42" style="-fx-background-color:#EF4444; -fx-text-fill:white; -fx-background-radius:8; -fx-font-weight:bold; -fx-cursor:hand;" text="🗑  Hapus" />
+                        <Button maxWidth="Infinity" onAction="#handleClearPengumuman" prefHeight="42" style="-fx-background-color:#E2E8F0; -fx-text-fill:#334155; -fx-background-radius:8; -fx-cursor:hand;" text="⊗  Clear" />
                     </VBox>
-                    <VBox spacing="12" HBox.hgrow="ALWAYS"
-                          style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;">
-                        <Label text="Daftar Pengumuman" textFill="#0F172A" style="-fx-font-weight:bold; -fx-font-size:16;"/>
+                    <VBox spacing="12" style="-fx-background-color:white; -fx-background-radius:16; -fx-padding:20;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-weight:bold; -fx-font-size:16;" text="Daftar Pengumuman" textFill="#0F172A" />
                         <TableView fx:id="tblPengumuman" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="colPengId" text="ID" prefWidth="60"/>
-                                <TableColumn fx:id="colPengJudul" text="Judul" prefWidth="200"/>
-                                <TableColumn fx:id="colPengIsi" text="Isi" prefWidth="300"/>
-                                <TableColumn fx:id="colPengKelas" text="Kelas" prefWidth="140"/>
-                                <TableColumn fx:id="colPengTgl" text="Tanggal" prefWidth="140"/>
+                                <TableColumn fx:id="colPengId" prefWidth="60" text="ID" />
+                                <TableColumn fx:id="colPengJudul" prefWidth="200" text="Judul" />
+                                <TableColumn fx:id="colPengIsi" prefWidth="300" text="Isi" />
+                                <TableColumn fx:id="colPengKelas" prefWidth="140" text="Kelas" />
+                                <TableColumn fx:id="colPengTgl" prefWidth="140" text="Tanggal" />
                             </columns>
-                            <placeholder><Label text="Belum ada pengumuman." textFill="#94A3B8"/></placeholder>
+                            <placeholder><Label text="Belum ada pengumuman." textFill="#94A3B8" /></placeholder>
                         </TableView>
                     </VBox>
                 </HBox>
             </VBox>
+
 
         </StackPane>
     </center>
 </BorderPane>
+
