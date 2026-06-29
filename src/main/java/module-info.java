@@ -5,4 +5,6 @@ module com.example.loginapp {
 
     opens com.example.loginapp to javafx.fxml;
     exports com.example.loginapp;
+    exports com.example.loginapp.controller;
+    opens com.example.loginapp.controller to javafx.fxml;
 }

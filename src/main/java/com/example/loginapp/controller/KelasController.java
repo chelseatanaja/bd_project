@@ -1,5 +1,6 @@
-package com.example.loginapp;
+package com.example.loginapp.controller;
 
+import com.example.loginapp.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package com.example.loginapp;
+package com.example.loginapp.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

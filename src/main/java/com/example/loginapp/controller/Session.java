@@ -1,4 +1,4 @@
-package com.example.loginapp;
+package com.example.loginapp.controller;
 
 public class Session {
     private static int userId;

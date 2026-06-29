@@ -1,5 +1,6 @@
-package com.example.loginapp;
+package com.example.loginapp.controller;
 
+import com.example.loginapp.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

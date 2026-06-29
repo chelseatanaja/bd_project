@@ -1,90 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.loginapp.SignUpController"
-            prefWidth="1000"
-            prefHeight="650"
-            style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);">
+<BorderPane prefHeight="650" prefWidth="1000" style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.loginapp.controller.SignUpController">
 
     <left>
-        <VBox prefWidth="430"
-              spacing="28"
-              style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
+        <VBox prefWidth="430" spacing="28" style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
             <padding>
-                <Insets top="50" right="42" bottom="45" left="42"/>
+                <Insets bottom="45" left="42" right="42" top="50" />
             </padding>
 
             <Label text="Create Account" textFill="WHITE">
-                <font><Font name="System Bold" size="42"/></font>
+                <font><Font name="System Bold" size="42" /></font>
             </Label>
 
-            <Label text="Register your account to access the LMS database management system."
-                   textFill="#CBD5E1"
-                   wrapText="true">
-                <font><Font size="17"/></font>
+            <Label text="Register your account to access the Charm School Learning Management System." textFill="#CBD5E1" wrapText="true">
+                <font><Font size="17" /></font>
             </Label>
 
-            <Region VBox.vgrow="ALWAYS"/>
-
-            <Label text="● PostgreSQL Ready" textFill="#4ADE80">
-                <font><Font name="System Bold" size="15"/></font>
-            </Label>
+            <Region VBox.vgrow="ALWAYS" />
         </VBox>
     </left>
 
     <center>
         <StackPane>
-            <VBox alignment="CENTER"
-                  spacing="6"
-                  maxWidth="410"
-                  style="-fx-background-color:white;
-                         -fx-background-radius:28;
-                         -fx-padding:42;">
+            <VBox alignment="CENTER" maxWidth="410" spacing="6" style="-fx-background-color:white;                          -fx-background-radius:28;                          -fx-padding:42;">
 
                 <Label text="Sign Up" textFill="#0F172A">
-                    <font><Font name="System Bold" size="34"/></font>
+                    <font><Font name="System Bold" size="34" /></font>
                 </Label>
 
-                <Region prefHeight="12"/>
+                <Region prefHeight="12" />
 
-                <TextField fx:id="txtNama" promptText="Full Name" prefWidth="320" prefHeight="48"/>
-                <Label fx:id="lblNamaError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+                <TextField fx:id="txtNama" prefHeight="48" prefWidth="320" promptText="Full Name" />
+                <Label fx:id="lblNamaError" maxWidth="320" style="-fx-text-fill:#EF4444; -fx-font-size:11;" visible="false" wrapText="true" />
 
-                <TextField fx:id="txtEmail" promptText="Email" prefWidth="320" prefHeight="48"/>
-                <Label fx:id="lblEmailError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+                <TextField fx:id="txtEmail" prefHeight="48" prefWidth="320" promptText="Email" />
+                <Label fx:id="lblEmailError" maxWidth="320" style="-fx-text-fill:#EF4444; -fx-font-size:11;" visible="false" wrapText="true" />
 
-                <PasswordField fx:id="txtPassword" promptText="Password" prefWidth="320" prefHeight="48"/>
-                <Label fx:id="lblPasswordError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+                <PasswordField fx:id="txtPassword" prefHeight="48" prefWidth="320" promptText="Password" />
+                <Label fx:id="lblPasswordError" maxWidth="320" style="-fx-text-fill:#EF4444; -fx-font-size:11;" visible="false" wrapText="true" />
 
-                <PasswordField fx:id="txtConfirmPassword" promptText="Confirm Password" prefWidth="320" prefHeight="48"/>
-                <Label fx:id="lblConfirmPasswordError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+                <PasswordField fx:id="txtConfirmPassword" prefHeight="48" prefWidth="320" promptText="Confirm Password" />
+                <Label fx:id="lblConfirmPasswordError" maxWidth="320" style="-fx-text-fill:#EF4444; -fx-font-size:11;" visible="false" wrapText="true" />
 
-                <ComboBox fx:id="cmbRole"
-                          promptText="Select Role"
-                          prefWidth="320"
-                          prefHeight="48"/>
-                <Label fx:id="lblRoleError" style="-fx-text-fill:#EF4444; -fx-font-size:11;" wrapText="true" visible="false" maxWidth="320"/>
+                <ComboBox fx:id="cmbRole" prefHeight="48" prefWidth="320" promptText="Select Role" />
+                <Label fx:id="lblRoleError" maxWidth="320" style="-fx-text-fill:#EF4444; -fx-font-size:11;" visible="false" wrapText="true" />
 
-                <Region prefHeight="6"/>
+                <Region prefHeight="6" />
 
-                <Button fx:id="btnSignUp"
-                        text="SIGN UP"
-                        prefWidth="320"
-                        prefHeight="52"
-                        style="-fx-background-color: linear-gradient(to right, #4F46E5, #2563EB);
-                               -fx-text-fill:white;
-                               -fx-font-weight:bold;
-                               -fx-background-radius:15;"/>
+                <Button fx:id="btnSignUp" prefHeight="52" prefWidth="320" style="-fx-background-color: linear-gradient(to right, #4F46E5, #2563EB);                                -fx-text-fill:white;                                -fx-font-weight:bold;                                -fx-background-radius:15;" text="SIGN UP" />
 
                 <HBox alignment="CENTER" spacing="5">
-                    <Label text="Already have an account?"/>
-                    <Hyperlink fx:id="btnLogin" text="Login"/>
+                    <Label text="Already have an account?" />
+                    <Hyperlink fx:id="btnLogin" text="Login" />
                 </HBox>
 
             </VBox>

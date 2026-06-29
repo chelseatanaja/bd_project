@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="760" prefWidth="1280" style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.loginapp.LoginController">
+<BorderPane prefHeight="760" prefWidth="1280" style="-fx-background-color: linear-gradient(to bottom right, #F4F7FF, #EEF3FF);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.loginapp.controller.LoginController">
 
     <left>
         <VBox prefWidth="480" spacing="28" style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
