@@ -339,6 +339,18 @@ public class AdminDashboardController {
                         ins.addBatch();
                     }
                     ins.executeBatch();
+                    PreparedStatement ps = conn.prepareStatement(
+                            "UPDATE enrollment " +
+                                    "SET status='approved' " +
+                                    "WHERE kelas_id=? AND user_id=?");
+
+                    for (StudentItem si : assignedItems) {
+                        ps.setString(1, kelasId);
+                        ps.setInt(2, si.getStudent().getId());
+                        ps.addBatch();
+                    }
+
+                    ps.executeBatch();
                 }
                 conn.commit();
                 showInfo("Berhasil", assignedItems.size() + " mahasiswa tersimpan di kelas " + kelasId + ".");

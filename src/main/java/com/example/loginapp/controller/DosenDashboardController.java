@@ -371,41 +371,71 @@ public class DosenDashboardController {
 
     private void loadTugas() {
         tugasList.clear();
+
+        int userId = Session.getUserId();
+
+        String sql =
+                "SELECT a.id, a.judul, k.nama AS kelas, a.deadline " +
+                        "FROM assignment a " +
+                        "JOIN kelas k ON a.kelas_id = k.id " +
+                        "JOIN kelas_dosen kd ON k.id = kd.kelas_id " +
+                        "WHERE kd.dosen_id = ? " +
+                        "ORDER BY a.id";
+
         try (Connection conn = DatabaseConnection.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(
-                     "SELECT a.id, a.judul, k.nama AS kelas, a.deadline" +
-                             "FROM assignment a" +
-                             "JOIN kelas k" +
-                             "    ON a.kelas_id = k.id" +
-                             "JOIN kelas_dosen kd" +
-                             "    ON k.id = kd.kelas_id" +
-                             "WHERE kd.dosen_id = ?" +
-                             "ORDER BY a.id")) {
-            while (rs.next())
-                tugasList.add(new Tugas(rs.getInt("id"), rs.getString("judul"),
-                        nvl(rs.getString("kelas")), nvl(rs.getString("deadline"))));
-        } catch (Exception e) { e.printStackTrace(); }
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                tugasList.add(new Tugas(
+                        rs.getInt("id"),
+                        rs.getString("judul"),
+                        nvl(rs.getString("kelas")),
+                        nvl(rs.getString("deadline"))
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     private void loadMateri() {
         materiList.clear();
+
+        int userId = Session.getUserId();
+
+        String sql =
+                "SELECT m.id, m.judul, k.nama AS kelas, m.isi " +
+                        "FROM materi m " +
+                        "JOIN kelas k ON m.kelas_id = k.id " +
+                        "JOIN kelas_dosen kd ON k.id = kd.kelas_id " +
+                        "WHERE kd.dosen_id = ? " +
+                        "ORDER BY m.id";
+
         try (Connection conn = DatabaseConnection.getConnection();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(
-                     "SELECT m.id, m.judul, k.nama AS kelas, m.isi" +
-                             "FROM materi m" +
-                             "JOIN kelas k" +
-                             "    ON m.kelas_id = k.id" +
-                             "JOIN kelas_dosen kd" +
-                             "    ON k.id = kd.kelas_id" +
-                             "WHERE kd.dosen_id = ?" +
-                             "ORDER BY m.id")) {
-            while (rs.next())
-                materiList.add(new Materi(rs.getInt("id"), rs.getString("judul"),
-                        nvl(rs.getString("kelas")), nvl(rs.getString("isi"))));
-        } catch (Exception e) { e.printStackTrace(); }
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                materiList.add(new Materi(
+                        rs.getInt("id"),
+                        rs.getString("judul"),
+                        nvl(rs.getString("kelas")),
+                        nvl(rs.getString("isi"))
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
