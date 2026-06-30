@@ -108,7 +108,7 @@ public class DosenDashboardController {
 
     // Warna accent per card kelas (cycling)
     private static final String[] CARD_COLORS = {
-            "#4F46E5", "#2563EB", "#0891B2", "#059669", "#D97706", "#DC2626", "#7C3AED", "#DB2777"
+            "#E4568B", "#D4457A", "#F0689D", "#C73870", "#F47DAE", "#B82D62", "#EB6B9E", "#CC4F82"
     };
 
 
@@ -161,7 +161,7 @@ public class DosenDashboardController {
 
     private void setActive(Button b) {
         String off = "-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;";
-        String on  = "-fx-background-color:linear-gradient(to right,#4F46E5,#2563EB); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
+        String on  = "-fx-background-color:linear-gradient(to right,#E4568B, #E4568B); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
         for (Button btn : new Button[]{btnNavDashboard, btnNavTugas, btnNavMateri, btnNavSubmission, btnNavPengumuman})
             btn.setStyle(off);
         b.setStyle(on);
