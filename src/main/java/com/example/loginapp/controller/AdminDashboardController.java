@@ -16,13 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * AdminDashboardController — versi baru dengan:
- *  1. Dual-List assign mahasiswa (ListView Available ↔ Assigned)
- *  2. Assign dosen pengampu per kelas (ComboBox + tabel kolom Dosen)
- *     - 1 kelas hanya boleh punya 1 dosen aktif (DB constraint + konfirmasi ganti di UI)
- *  3. Tabel kelas_dosen agar DosenDashboard & StudentDashboard bisa baca dosen tiap kelas
- */
 public class AdminDashboardController {
 
     // === SIDEBAR ===
@@ -469,7 +462,7 @@ public class AdminDashboardController {
                 super.updateItem(nama, empty);
                 if (empty || nama == null) { setText(null); setStyle(""); return; }
                 setText(nama);
-                setStyle("-fx-font-weight:bold; -fx-text-fill:#1E3A5F; -fx-font-size:13;");
+                setStyle("-fx-font-weight:bold; -fx-text-fill:#0F172A; -fx-font-size:13;");
             }
         });
 
@@ -597,7 +590,7 @@ public class AdminDashboardController {
 
     private void setActiveNav(Button active) {
         String inactive = "-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;";
-        String activeStyle = "-fx-background-color: linear-gradient(to right,#0A1680,#2563EB); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
+        String activeStyle = "-fx-background-color: linear-gradient(to right, #E4568B, #E4568B); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
         for (Button b : new Button[]{btnNavDashboard, btnNavKelas, btnNavStudents}) b.setStyle(inactive);
         active.setStyle(activeStyle);
     }

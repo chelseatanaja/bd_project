@@ -106,9 +106,16 @@ public class DosenDashboardController {
     private int selectedPengId = -1;
 
 
-    // Warna accent per card kelas (cycling)
+    // Warna accent per card kelas (pink palette)
     private static final String[] CARD_COLORS = {
-            "#4F46E5", "#2563EB", "#0891B2", "#059669", "#D97706", "#DC2626", "#7C3AED", "#DB2777"
+            "#FBCFE8",
+            "#F9A8D4",
+            "#F472B6",
+            "#EC4899",
+            "#DB2777",
+            "#BE185D",
+            "#9D174D",
+            "#831843"
     };
 
 
@@ -161,7 +168,7 @@ public class DosenDashboardController {
 
     private void setActive(Button b) {
         String off = "-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;";
-        String on  = "-fx-background-color:linear-gradient(to right,#4F46E5,#2563EB); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
+        String on  = "-fx-background-color:linear-gradient(to right,#E4568B, #E4568B); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
         for (Button btn : new Button[]{btnNavDashboard, btnNavTugas, btnNavMateri, btnNavSubmission, btnNavPengumuman})
             btn.setStyle(off);
         b.setStyle(on);

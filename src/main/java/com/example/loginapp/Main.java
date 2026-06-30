@@ -3,6 +3,7 @@ package com.example.loginapp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -12,7 +13,8 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Scene scene = new Scene(loader.load(), 1000, 650);
 
-        primaryStage.setTitle("LMS Database Management");
+        primaryStage.setTitle("Charm School");
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("charm school logo.png")));
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

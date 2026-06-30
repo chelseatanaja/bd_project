@@ -133,7 +133,7 @@ public class StudentDashboardController {
 
     private void setActive(Button b) {
         String off = "-fx-background-color:transparent; -fx-text-fill:#CBD5E1; -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;";
-        String on  = "-fx-background-color:linear-gradient(to right,#4F46E5,#2563EB); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
+        String on  = "-fx-background-color:linear-gradient(to right,#E4568B, #E4568B); -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold; -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;";
         for (Button btn : new Button[]{btnNavDashboard, btnNavTugas, btnNavMateri, btnNavPengumuman, btnNavPRS})
             btn.setStyle(off);
         b.setStyle(on);
@@ -191,35 +191,83 @@ public class StudentDashboardController {
         int userId = Session.getUserId();
         try (Connection conn = DatabaseConnection.getConnection(); Statement st = conn.createStatement()) {
             // Total tugas aktif
-            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM assignment");
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT COUNT(*) " +
+                            "FROM assignment a " +
+                            "JOIN enrollment e ON a.kelas_id = e.kelas_id " +
+                            "LEFT JOIN submission s ON s.assignment_id = a.id AND s.user_id = ? " +
+                            "WHERE e.user_id = ? " +
+                            "AND e.status = 'approved' " +
+                            "AND (a.deadline >= CURRENT_DATE " +
+                            "     OR (a.deadline < CURRENT_DATE AND s.id IS NULL))"
+            );
+
+            ps.setInt(1, userId);
+            ps.setInt(2, userId);
+
+            ResultSet rs = ps.executeQuery();
             int totalTugas = rs.next() ? rs.getInt(1) : 0;
             lblMyClasses.setText(String.valueOf(totalTugas));
 
             // Sudah dikumpul
-            PreparedStatement ps = conn.prepareStatement("SELECT COUNT(*) FROM submission WHERE user_id=?");
-            ps.setInt(1, userId); rs = ps.executeQuery();
-            lblUpcomingTasks.setText(rs.next() ? String.valueOf(rs.getInt(1)) : "0");
+            ps = conn.prepareStatement(
+                    "SELECT COUNT(*) " +
+                            "FROM submission s " +
+                            "JOIN assignment a ON s.assignment_id = a.id " +
+                            "JOIN enrollment e ON a.kelas_id = e.kelas_id " +
+                            "WHERE s.user_id = ? " +
+                            "AND e.user_id = ? " +
+                            "AND e.status = 'approved'"
+            );
+
+            ps.setInt(1, userId);
+            ps.setInt(2, userId);
+
+            rs = ps.executeQuery();
+            lblUpcomingTasks.setText(
+                    rs.next() ? String.valueOf(rs.getInt(1)) : "0");
 
             // Pengumuman
             try {
-                rs = st.executeQuery("SELECT COUNT(*) FROM pengumuman");
-                lblPengumuman.setText(rs.next() ? String.valueOf(rs.getInt(1)) : "0");
-            } catch (Exception ignored) { lblPengumuman.setText("0"); }
+
+                ps = conn.prepareStatement(
+                        "SELECT COUNT(*) " +
+                                "FROM pengumuman p " +
+                                "JOIN enrollment e ON p.kelas_id = e.kelas_id " +
+                                "WHERE e.user_id = ? " +
+                                "AND e.status = 'approved'"
+                );
+
+                ps.setInt(1, userId);
+
+                rs = ps.executeQuery();
+
+                lblPengumuman.setText(
+                        rs.next() ? String.valueOf(rs.getInt(1)) : "0");
+
+            } catch (Exception ignored) {
+                lblPengumuman.setText("0");
+            }
 
             // Dashboard table - tugas + status kumpul
             ObservableList<StudentAssignment> dash = FXCollections.observableArrayList();
             ps = conn.prepareStatement(
                     "SELECT a.id, a.judul, k.nama AS kelas, a.deadline, " +
-                            "CASE WHEN s.id IS NOT NULL THEN 'Sudah Kumpul' ELSE 'Belum Kumpul' END AS status, " +
-                            "COALESCE(s.nilai, '-') AS nilai " +
+                            "CASE WHEN s.id IS NOT NULL THEN 'Sudah Kumpul' " +
+                            "     WHEN a.deadline < CURRENT_DATE AND s.id IS NULL THEN 'Terlambat' " +
+                            "     ELSE 'Belum Kumpul' END AS status, " +
+                            "COALESCE(CAST(s.nilai AS VARCHAR), '-') AS nilai " +
                             "FROM assignment a " +
+                            "JOIN enrollment e ON a.kelas_id = e.kelas_id " + // Filter Enrollment
                             "LEFT JOIN kelas k ON a.kelas_id = k.id " +
                             "LEFT JOIN submission s ON s.assignment_id = a.id AND s.user_id = ? " +
-                            "ORDER BY a.deadline");
+                            "WHERE e.user_id = ? AND e.status = 'approved' " + // Filter User & Status
+                            "  AND (a.deadline >= CURRENT_DATE OR (a.deadline < CURRENT_DATE AND s.id IS NULL)) " + // Filter Deadline
+                            "ORDER BY a.deadline ASC");
             ps.setInt(1, userId); rs = ps.executeQuery();
             while (rs.next())
                 dash.add(new StudentAssignment(rs.getInt("id"), rs.getString("judul"),
-                        nvl(rs.getString("kelas")), nvl(rs.getString("deadline")),
+                        nvl(rs.getString("kelas")), nvl(rs. getString("deadline")),
                         nvl(rs.getString("status")), nvl(rs.getString("nilai"))));
             tblDashboard.setItems(dash);
         } catch (Exception e) { e.printStackTrace(); }
