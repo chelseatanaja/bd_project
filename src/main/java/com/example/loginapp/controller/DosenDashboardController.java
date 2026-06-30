@@ -106,10 +106,18 @@ public class DosenDashboardController {
     private int selectedPengId = -1;
 
 
-    // Warna accent per card kelas (cycling)
+    // Warna accent per card kelas (pink palette)
     private static final String[] CARD_COLORS = {
-            "#E4568B", "#D4457A", "#F0689D", "#C73870", "#F47DAE", "#B82D62", "#EB6B9E", "#CC4F82"
+            "#FBCFE8",
+            "#F9A8D4",
+            "#F472B6",
+            "#EC4899",
+            "#DB2777",
+            "#BE185D",
+            "#9D174D",
+            "#831843"
     };
+
 
 
     @FXML
