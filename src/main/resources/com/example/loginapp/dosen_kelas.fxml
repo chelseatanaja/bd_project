@@ -19,7 +19,7 @@
     <!-- ========== SIDEBAR ========== -->
     <left>
         <VBox prefWidth="240" spacing="6"
-              style="-fx-background-color: linear-gradient(to bottom, #07153A, #0B0F2F);">
+              style="-fx-background-color: linear-gradient(to bottom, #F29BB9, #F29BB9, #E4568B);">
             <padding><Insets top="28" right="14" bottom="28" left="14"/></padding>
 
 
@@ -64,7 +64,7 @@
             <!-- Nav per kelas -->
             <Button fx:id="btnNavMateri" text="📚   Materi"
                     maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:linear-gradient(to right,#4F46E5,#2563EB);
+                    style="-fx-background-color:#e4568b;
                           -fx-text-fill:white; -fx-font-size:14; -fx-font-weight:bold;
                           -fx-background-radius:12; -fx-alignment:CENTER_LEFT; -fx-cursor:hand;"
                     onAction="#handleNavMateri"/>
@@ -72,14 +72,14 @@
 
             <Button fx:id="btnNavTugas" text="📋   Tugas"
                     maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
+                    style="-fx-background-color:transparent; -fx-text-fill:#E4568B;
                           -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
                     onAction="#handleNavTugas"/>
 
 
             <Button fx:id="btnNavSubmission" text="📥   Submission"
                     maxWidth="Infinity" prefHeight="46"
-                    style="-fx-background-color:transparent; -fx-text-fill:#CBD5E1;
+                    style="-fx-background-color:transparent; -fx-text-fill:#E4568B;
                           -fx-font-size:14; -fx-alignment:CENTER_LEFT; -fx-cursor:hand; -fx-background-radius:12;"
                     onAction="#handleNavSubmission"/>
 
@@ -118,7 +118,7 @@
                         <Label text="Kelola materi pembelajaran untuk kelas ini" textFill="#64748B" style="-fx-font-size:13;"/>
                     </VBox>
                     <Button text="＋  Tambah Materi" prefHeight="42"
-                            style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:10;
+                            style="-fx-background-color:#E4568B; -fx-text-fill:white; -fx-background-radius:10;
                                   -fx-font-weight:bold; -fx-font-size:13; -fx-cursor:hand; -fx-padding:0 20;"
                             onAction="#handleShowFormMateri"/>
                 </HBox>
@@ -213,7 +213,7 @@
                         <Label text="Kelola tugas untuk kelas ini" textFill="#64748B" style="-fx-font-size:13;"/>
                     </VBox>
                     <Button text="＋  Tambah Tugas" prefHeight="42"
-                            style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:10;
+                            style="-fx-background-color:#E4568B; -fx-text-fill:white; -fx-background-radius:10;
                                   -fx-font-weight:bold; -fx-font-size:13; -fx-cursor:hand; -fx-padding:0 20;"
                             onAction="#handleShowFormTugas"/>
                 </HBox>
@@ -304,7 +304,7 @@
                         <Label text="Submission mahasiswa untuk kelas ini" textFill="#64748B" style="-fx-font-size:13;"/>
                     </VBox>
                     <Button text="✎  Beri Nilai" prefHeight="40"
-                            style="-fx-background-color:#4F46E5; -fx-text-fill:white; -fx-background-radius:8;
+                            style="-fx-background-color:#E4568B; -fx-text-fill:white; -fx-background-radius:8;
                                   -fx-font-weight:bold; -fx-cursor:hand; -fx-padding:0 18;"
                             onAction="#handleBeriNilai"/>
                 </HBox>
